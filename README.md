@@ -1,12 +1,10 @@
 Enviro-Pi
 =========
+Copied from https://github.com/odlevakp/enviro-pi
 
-
-I wanted something to monitor my room temperature and humidity, so I wrote
-this simple web-based weather station for Raspberry Pi and SenseHat.
-
-Very "raw", fixes and PRs welcome!
-
+Monitor temperature, humidity, barometric pressure with a Raspberry Pi and SenseHat.
+Data is stored to a sqlite3 database default every 300 seconds.  A webserver
+allows viewing data in chart form.
 
 ### Hardware requirements
 
@@ -28,7 +26,6 @@ The application was inspired by following resources:
 * [ChartJS](http://www.chartjs.org/docs) - Awesome charts used to display environment readings.
 * [Flask](http://flask.pocoo.org/) - Web server used to display data, inspired by [this](https://github.com/pallets/flask/tree/master/examples/flaskr) blog example.
 * [Python sqlite tutorial](http://zetcode.com/db/sqlitepythontutorial/)
-
 
 
 ### Installation and Software requirements
