@@ -28,8 +28,6 @@ if [ -z "$( pgrep -f webserver.py )" ]; then
 else
    webPID=$(pgrep -f webserver.py)
    echo "webserver.py is RUNNING PID $webPID"
-   echo "IP Address"
-   hostname -I
 fi
 
 if [ -z "$( pgrep -f writer.py )" ]; then
@@ -39,5 +37,14 @@ else
    echo "writer.py is RUNNING PID $writePID"
 fi
 
-echo "------------------"
+echo ""
+echo "This RPI's IP Addresses"
+myip=$(hostname -I | cut -d " " -f 1)
+echo "$myip"
+hostname -I | cut -d " " -f 2
+hostname -I | cut -d " " -f 3
+echo "To Access RUNNING enviro-pi web interface. Type or paste url link below"
+echo "into web browser url window. Normally near top of browser app."
+echo "http://$myip:8080"
+echo ""
 echo "Bye"
