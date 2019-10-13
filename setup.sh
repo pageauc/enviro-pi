@@ -59,7 +59,8 @@ Install Complete
 2. Test enviro-pi
 
    cd ~/enviro-pi
-   ./enviro-pi.sh
+   sudo ./writer.py &
+   sudo ./webserver.py
 
 Access web page to ensure system is working.
 

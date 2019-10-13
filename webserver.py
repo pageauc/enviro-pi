@@ -293,5 +293,7 @@ def index():
 
 
 if __name__ == '__main__':
+    print("--------------------------------------------")
     print("Access web page at http://%s:8080"  % (myip))
+    print("--------------------------------------------")    
     app.run(debug=True, host='0.0.0.0', port=8080)
