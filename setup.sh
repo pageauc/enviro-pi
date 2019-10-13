@@ -36,7 +36,9 @@ for fname in "${enviro_files[@]}" ; do
     fi
 done
 
+echo "-----------------------------------------------"
 echo "Install Dependencies.  Wait ..."
+echo "-----------------------------------------------"
 sudo apt-get install -yq supervisor
 sudo apt-get install -yq python3-flask
 sudo apt-get install -yq sqlite3
@@ -60,28 +62,6 @@ Install Complete
    cd ~/enviro-pi
    ./start.sh
 
-Calibrate speed camera per wiki instructions.  After Calibration is complete
-set config.py variable calibrate = False
-
-Run from Admin menu per
-
-   ./menubox.sh
-
-IMPORTANT: speed-cam.py ver 8.x Requires Updated config.py and plugins
-
-    cd ~/speed-camera
-    cp config.py config.py.bak
-    cp config.py.new config.py
-
-To replace plugins rename plugins folder per below
-
-    cd ~/speed-camera
-    mv plugins pluginsold
-
-Then run menubox.sh UPGRADE menu pick.
-
------------------------------------------------
-For Detailed Instructions See https://github.com/pageauc/speed-camera/wiki
 $INSTALL_DIR version $ver
 Good Luck Claude ...
 Bye"
