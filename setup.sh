@@ -9,7 +9,7 @@ cd ~   # change to users home directory
 HOME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # List of files to copy to destination RPI using wget
-enviro_files=("README.md" "LICENSE" "webserver.py" "writer.py" "restart.sh" \
+enviro_files=("README.md" "LICENSE" "webserver.py" "writer.py" "enviro-pi.sh" \
 "static/Chart.min.js" "static/favicon.ico" "static/menu.js" \
 "static/moment.min.js" "static/raspberry_pi_logo.png" "static/style.css" \
 "supervisor/enviro-pi-webserver.conf" "supervisor/enviro-pi-writer.conf" \
@@ -43,7 +43,10 @@ sudo apt-get install -yq supervisor
 sudo apt-get install -yq python3-flask
 sudo apt-get install -yq sqlite3
 sudo apt-get install -yq sense-hat
+sudo apt-get install -yq dos2unix
 
+dos2unix *py
+dos2unix *sh
 chmod +x *.py
 chmod +x *.sh
 cd $HOME_DIR
@@ -53,14 +56,18 @@ echo "
 Install Complete
 -----------------------------------------------
 1. Ensure RPI sensehat is installed and working
-2. Raspberry pi optionally needs a monitor/TV attached to display openCV window
-3. Run speed-cam.py in SSH Terminal (default) or optional GUI Desktop
-   Review and modify the config.py settings as required using nano editor
-4. To start speed-cam open SSH or a GUI desktop Terminal session
-   and change to speed-camera folder and launch per commands below
+2. Test enviro-pi
 
    cd ~/enviro-pi
-   ./start.sh
+   ./enviro-pi.sh
+
+Access web page to ensure system is working.
+
+    cd ~/enviro-pi
+    sudo ln -s /home/pi/enviro-pi/supervisor/* /etc/supervisor/conf.d/
+    sudo systemctl restart supervisor.service
+    sudo supervisorctl
+    ./enviro-pi.sh
 
 $INSTALL_DIR version $ver
 Good Luck Claude ...

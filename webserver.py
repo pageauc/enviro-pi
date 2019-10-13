@@ -8,6 +8,7 @@ from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g
 from flask import render_template, flash
 from flask import send_from_directory
+import socket
 
 # Just a helper variable.
 SECONDS_IN_DAY = 86400
@@ -20,6 +21,17 @@ ideally close to 45-50% RH.
 Suggested room temperature in winter should be between 20 °C to 23.5 °C and
 summer 23 °C to 25.5 °C.
 '''
+
+try:
+    myip = ([l for l in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1],
+                         [[(s.connect(('8.8.8.8', 53)),
+                            s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET,
+                                                                                   socket.SOCK_DGRAM)]][0][1]]) if l][0][0])
+except:
+    print("ERROR - Can't Find a Network IP Address on this Raspberry Pi")
+    print("        Configure Network and Try Again")
+    sys.exit(1)
+
 
 # Info for /about requests.
 OS_VERSION = ' '.join(platform.linux_distribution())
@@ -258,7 +270,6 @@ def show_statistics():
                            max_temp_hum=max_temp_hum,
                            avg_temp_hum=avg_temp_hum)
 
-
 @app.route("/about")
 def about():
     return render_template('about.html',
@@ -282,4 +293,5 @@ def index():
 
 
 if __name__ == '__main__':
+    print("Access web page at http://%s:8080"  % (myip))
     app.run(debug=True, host='0.0.0.0', port=8080)
