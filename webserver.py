@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import os
+import sys
 import platform
 import pkg_resources
 from sense_hat import SenseHat
@@ -39,7 +40,14 @@ PYTHON_VERSION = platform.python_version()
 SENSEHAT_VERSION = pkg_resources.get_distribution("sense_hat").version
 FLASK_VERSION = pkg_resources.get_distribution('flask').version
 
-sense = SenseHat()
+try:
+    sense = SenseHat()
+except OSError as err_msg:
+    print("ERROR - Problem accessing sense hat. Investigate ...")
+    print("        %s" % err_msg)
+    print("Bye")
+    sys.exit(1)
+
 sense.clear()
 
 app = Flask(__name__)
@@ -295,5 +303,5 @@ def index():
 if __name__ == '__main__':
     print("--------------------------------------------")
     print("Access web page at http://%s:8080"  % (myip))
-    print("--------------------------------------------")    
+    print("--------------------------------------------")
     app.run(debug=True, host='0.0.0.0', port=8080)

@@ -4,35 +4,38 @@
 echo "$0"
 echo ""
 if [ "$1" = "start" ]; then
+    echo "sudo systemctl start supervisor.service"
     sudo systemctl start supervisor.service
 elif [ "$1" = "stop" ]; then
+    echo "sudo systemctl stop supervisor.service"
     sudo systemctl stop supervisor.service
-elif [ "$1" = "restart" ]; then
-    sudo systemctl restart supervisor.service
 else
-   echo "     HELP"
-   echo "     ----"
-   echo "Specify parameter start, stop or restart"
+   echo "HELP"
+   echo "===="
+   echo "Specify a parameter start or stop"
    echo "Eg"
-   echo "    ./enviro-pi.sh restart"
+   echo "    ./enviro-pi.sh start"
    echo ""
+   echo "No parameter shows status"
 fi
+sleep 3  # wait for any service changes
 
-sleep 2  # wait for any service changes
-
+echo ""
+echo "STATUS"
+echo "======"
 if [ -z "$( pgrep -f webserver.py )" ]; then
-   echo "WARN   - webserver.py is NOT Running"
+   echo "webserver.py is NOT Running"
 else
    webPID=$(pgrep -f webserver.py)
-   echo "STATUS - webserver.py is Running PID $webPID"
+   echo "webserver.py is RUNNING PID $webPID"
 fi
 
 if [ -z "$( pgrep -f writer.py )" ]; then
-   echo "WARN   - writer.py is NOT Running"
+   echo "writer.py is NOT Running"
 else
    writePID=$(pgrep -f writer.py)
-   echo "STATUS - writer.py is Running PID $writePID"
+   echo "writer.py is RUNNING PID $writePID"
 fi
-echo ""
+
 echo "------------------"
-echo "$0 Bye"
+echo "Bye"

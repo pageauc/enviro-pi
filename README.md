@@ -1,13 +1,11 @@
 ## Enviro-Pi
-
-Copied from https://github.com/odlevakp/enviro-pi
-
 Monitor temperature, humidity, barometric pressure with a Raspberry Pi and SenseHat.
 Data is stored to a sqlite3 database default every 300 seconds.  A webserver
 allows viewing data in chart form.
 
-### Quick Install
+This project is a modified version originally from https://github.com/odlevakp/enviro-pi
 
+### Quick Install
 **IMPORTANT** - It is suggested you do a Raspbian ***sudo apt-get update*** and ***sudo apt-get upgrade***
 before curl install.
 
@@ -18,19 +16,18 @@ before curl install.
 
 
 ### Hardware requirements
+* Raspberry Pi 2, 3, 4  suggest using raspbian buster or stretch.
+* RPI SenseHat board
+*[40 pin GPIO Ribbon Cable](https://thepihut.com/products/gpio-ribbon-cable-for-raspberry-pi-40-pins) (optional)
 
-* Raspberry Pi 3
-* RPI SenseHat
-* [40 pin GPIO Ribbon Cable](https://thepihut.com/products/gpio-ribbon-cable-for-raspberry-pi-40-pins) (optional)
-
-If you put your SenseHat on top of your Pi, the temperature readings might be
-inaccurate due to the heat coming from it - that's what the optional ribbon cable is for:
+If you put your SenseHat on top of your Pi, the temperature readings will be
+inaccurate due to the heat coming from the pi - that's what the optional ribbon cable is for:
 
 ![SenseHat Ribbon Cable](http://files.phisolutions.eu/enviro-pi-hw1.jpg "SenseHat with Ribbon Cable")
 
 To use your SenseHat with a ribbon cable, you can remove the GPIO header on the bottom of the hat. It won't go easy the first time, just remember, you are removing the bottom one ;-)
 
-The application was inspired by following resources:
+The application was inspired by the following resources:
 
 * [Sense-hat API documentation](https://pythonhosted.org/sense-hat/)
 * [w3schools](https://pythonhosted.org/sense-hat/) - for HTML menus, templates and CSS.
@@ -40,7 +37,6 @@ The application was inspired by following resources:
 
 
 ### Installation and Software requirements
-
 Update your package database and make sure you have all required packages,
 then clone this git repository. Installation of supervisor is optional, it
 is used to keep the processes running in background.
@@ -51,9 +47,7 @@ sudo apt install supervisor python3-flask sqlite3 git sense-hat
 git clone https://github.com/odlevakp/enviro-pi.git ~/enviro-pi
 ```
 
-
 ### Auto start
-
 Supervisor was installed to keep your two processes alive. First one, `writer.py`, reads environmental information from sensehat and writes them into a database.
 Second process, `webserver.py`, starts a web server and displays collected data. The configuration needed to run them using supervisor, is placed in the
 supervisor subdirectory.
@@ -67,7 +61,7 @@ sudo systemctl restart supervisor.service
 sudo supervisorctl
 ```
 
-You should see both processes running and good to go. Open you browser on `PI_IP_ADDRESS:8080`.
+You should see both processes running and good to go. Open you browser on `http://RPI_IP_ADDRESS:8080`.
 
 
 ### Screenshots
@@ -77,7 +71,6 @@ You should see both processes running and good to go. Open you browser on `PI_IP
 
 
 ### Playing with database
-
 The writer process is storing environmental readings in a local SQLite database. You can use the CLI client
 to make additional queries on the recorded dataset.
 
@@ -97,10 +90,7 @@ FROM sensehat;
 
 Please note that time is stored in the `epoch` column as time since epoch. Column `temp_prs` stores temperature from pressure, not used in the web interface.
 
-
-
-License and Authors
--------------------
+### License and Authors
 Copyright 2016 Pavol Odlevak
 
 Using <a href="http://www.chartjs.org/">Chart.js</a> and <a href="http://momentjs.com/">Moment.js</a> available under the MIT license.
