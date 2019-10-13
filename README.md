@@ -1,16 +1,27 @@
-Enviro-Pi
-=========
+## Enviro-Pi
+
 Copied from https://github.com/odlevakp/enviro-pi
 
 Monitor temperature, humidity, barometric pressure with a Raspberry Pi and SenseHat.
 Data is stored to a sqlite3 database default every 300 seconds.  A webserver
 allows viewing data in chart form.
 
+### Quick Install
+
+**IMPORTANT** - It is suggested you do a Raspbian ***sudo apt-get update*** and ***sudo apt-get upgrade***
+before curl install.
+
+***Step 1*** With mouse left button highlight curl command in code box below. Right click mouse in **highlighted** area and Copy.     
+***Step 2*** On RPI putty SSH or terminal session right click, select paste then Enter to download and run script.     
+
+    curl -L https://raw.github.com/pageauc/enviro-pi/master/source/setup.sh | bash
+
+
 ### Hardware requirements
 
 * Raspberry Pi 3
-* SenseHat
-* [GPIO Ribbon Cable](https://thepihut.com/products/gpio-ribbon-cable-for-raspberry-pi-40-pins) (optional)
+* RPI SenseHat
+* [40 pin GPIO Ribbon Cable](https://thepihut.com/products/gpio-ribbon-cable-for-raspberry-pi-40-pins) (optional)
 
 If you put your SenseHat on top of your Pi, the temperature readings might be
 inaccurate due to the heat coming from it - that's what the optional ribbon cable is for:
