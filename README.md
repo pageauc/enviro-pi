@@ -1,5 +1,5 @@
 # Enviro-Pi
-Monitor temperature, humidity, barometric pressure tremds with a Raspberry Pi and SenseHat.
+Monitor temperature, humidity, barometric pressure trends with a Raspberry Pi and SenseHat.
 Data is stored to a sqlite3 database default every 300 seconds.  A webserver
 allows viewing data status, charts and statistics from a web browser on your local network.
 
