@@ -16,9 +16,9 @@ before curl install.
 
 
 ### Hardware requirements
-* Raspberry Pi 2, 3, 4  suggest using raspbian buster or stretch.
-* RPI SenseHat board
-*[40 pin GPIO Ribbon Cable](https://thepihut.com/products/gpio-ribbon-cable-for-raspberry-pi-40-pins) (optional)
+* Raspberry Pi 2, 3, 4  suggest using raspbian buster or stretch.   
+* RPI SenseHat board   
+* [40 pin GPIO Ribbon Cable](https://thepihut.com/products/gpio-ribbon-cable-for-raspberry-pi-40-pins) (optional)
 
 If you put your SenseHat on top of your Pi, the temperature readings will be
 inaccurate due to the heat coming from the pi - that's what the optional ribbon cable is for:
