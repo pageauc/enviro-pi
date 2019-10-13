@@ -14,6 +14,14 @@ before curl install.
 
     curl -L https://raw.github.com/pageauc/enviro-pi/master/setup.sh | bash
 
+To Run
+
+    cd ~/enviro-pi
+    sudo ln -s /home/pi/enviro-pi/supervisor/* /etc/supervisor/conf.d/    
+    ./enviro-pi.sh start
+    
+Access enviro-pi web page from a web browser using RPI ip_address:webport eg http://192.168.1.245:8080   
+substitute the enviro-pi raspberry pi ip address displayed by enviro-pi.sh script. 
 
 ### Hardware requirements
 * Raspberry Pi 2, 3, 4  suggest using raspbian buster or stretch.   
@@ -36,7 +44,7 @@ The application was inspired by the following resources:
 * [Python sqlite tutorial](http://zetcode.com/db/sqlitepythontutorial/)
 
 
-### Installation and Software requirements
+### Manual Installation
 Update your package database and make sure you have all required packages,
 then clone this git repository. Installation of supervisor is optional, it
 is used to keep the processes running in background.
@@ -47,7 +55,7 @@ sudo apt install supervisor python3-flask sqlite3 git sense-hat
 git clone https://github.com/odlevakp/enviro-pi.git ~/enviro-pi
 ```
 
-### Auto start
+### How to Auto Start
 Supervisor was installed to keep your two processes alive. First one, `writer.py`, reads environmental information from sensehat and writes them into a database.
 Second process, `webserver.py`, starts a web server and displays collected data. The configuration needed to run them using supervisor, is placed in the
 supervisor subdirectory.
@@ -56,12 +64,14 @@ supervisor subdirectory.
 cd ~/enviro-pi
 
 sudo ln -s /home/pi/enviro-pi/supervisor/* /etc/supervisor/conf.d/
-sudo systemctl restart supervisor.service
+sudo systemctl start supervisor.service
 
 sudo supervisorctl
 ```
 
-You should see both processes running and good to go. Open you browser on `http://RPI_IP_ADDRESS:8080`.
+You should see both processes running and good to go.   
+Open you browser on `http://RPI_IP_ADDRESS:8080`.  
+eg http://192.168.1.145:8080
 
 
 ### Screenshots
@@ -69,8 +79,7 @@ You should see both processes running and good to go. Open you browser on `http:
 ![Charts MacOS screenshot](http://files.phisolutions.eu/charts.png "Charts MacOS screenshot")
 ![Statistics Android screenshot](http://files.phisolutions.eu/statistics.png "Statistics Android screenshot")
 
-
-### Playing with database
+### How to Query sqlite database
 The writer process is storing environmental readings in a local SQLite database. You can use the CLI client
 to make additional queries on the recorded dataset.
 

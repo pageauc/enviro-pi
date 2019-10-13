@@ -28,6 +28,8 @@ if [ -z "$( pgrep -f webserver.py )" ]; then
 else
    webPID=$(pgrep -f webserver.py)
    echo "webserver.py is RUNNING PID $webPID"
+   echo "IP Address"
+   hostname -I
 fi
 
 if [ -z "$( pgrep -f writer.py )" ]; then
