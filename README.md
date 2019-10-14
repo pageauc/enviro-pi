@@ -15,6 +15,7 @@ before curl install.
     curl -L https://raw.github.com/pageauc/enviro-pi/master/setup.sh | bash
 
 ### To Run
+From SSH or Terminal Session input the following commands
 
     cd ~/enviro-pi
     ./enviro-pi.sh install    
@@ -24,7 +25,7 @@ before curl install.
 To Access enviro-pi web interface See ***./enviro-pi.sh*** HELP.   
 From a computer on your local network, Type or copy/paste url link into web browser url box. 
 On ***Status*** page select ***Refresh Page*** to show current sensehat data. If no data displayed check sensehat setup.
-After startup, allow 15-20 minutes to accumulate chart data.
+After startup, allow 15-20 minutes to accumulate chart data (default updates are every 5 minutes).
 On ***Charts*** page, select green box for time range, then ***Load Charts*** to update graphs for selected range.
 
 ### Hardware Requirements
