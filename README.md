@@ -30,49 +30,9 @@ From a computer on your local network, Type or copy/paste url link into web brow
 
 If you put your SenseHat on top of your Pi, the temperature readings will be
 inaccurate due to the heat coming from the pi - that's what the optional ribbon cable is for:
-
+To use your SenseHat with a ribbon cable, you can carefully remove the GPIO header on the bottom of the hat.
+It won't go easy the first time, just remember, you are removing the bottom one ;-)
 ![SenseHat Ribbon Cable](http://files.phisolutions.eu/enviro-pi-hw1.jpg "SenseHat with Ribbon Cable")
-
-To use your SenseHat with a ribbon cable, you can remove the GPIO header on the bottom of the hat. It won't go easy the first time, just remember, you are removing the bottom one ;-)
-
-The application was inspired by the following resources:
-
-* [Sense-hat API documentation](https://pythonhosted.org/sense-hat/)
-* [w3schools](https://pythonhosted.org/sense-hat/) - for HTML menus, templates and CSS.
-* [ChartJS](http://www.chartjs.org/docs) - Awesome charts used to display environment readings.
-* [Flask](http://flask.pocoo.org/) - Web server used to display data, inspired by [this](https://github.com/pallets/flask/tree/master/examples/flaskr) blog example.
-* [Python sqlite tutorial](http://zetcode.com/db/sqlitepythontutorial/)
-
-
-### Manual Installation
-Update your package database and make sure you have all required packages,
-then clone this git repository. Installation of supervisor is optional, it
-is used to keep the processes running in background.
-
-```bash
-sudo apt update
-sudo apt install supervisor python3-flask sqlite3 git sense-hat
-git clone https://github.com/odlevakp/enviro-pi.git ~/enviro-pi
-```
-
-### How to Auto Start
-Supervisor was installed to keep your two processes alive. First one, `writer.py`, reads environmental information from sensehat and writes them into a database.
-Second process, `webserver.py`, starts a web server and displays collected data. The configuration needed to run them using supervisor, is placed in the
-supervisor subdirectory.
-
-```bash
-cd ~/enviro-pi
-
-sudo ln -s /home/pi/enviro-pi/supervisor/* /etc/supervisor/conf.d/
-sudo systemctl start supervisor.service
-
-sudo supervisorctl
-```
-
-You should see both processes running and good to go.   
-Open you browser on `http://RPI_IP_ADDRESS:8080`.  
-eg http://192.168.1.145:8080
-
 
 ### Screenshots
 ![Status MacOS screenshot](http://files.phisolutions.eu/status.png "Status MacOS screenshot")
@@ -96,13 +56,23 @@ sqlite> SELECT MAX(humidity),
 datetime(epoch, 'unixepoch', 'localtime') as date
 FROM sensehat;
 ```
-
-Please note that time is stored in the `epoch` column as time since epoch. Column `temp_prs` stores temperature from pressure, not used in the web interface.
+ctrl-d to exit sqlite3 console.   
+***Note*** Time is stored in the `epoch` column as time since epoch. 
+Column `temp_prs` stores temperature from pressure, not used in the web interface.
 
 ### License and Authors
 Copyright 2016 Pavol Odlevak
 
-Using <a href="http://www.chartjs.org/">Chart.js</a> and <a href="http://momentjs.com/">Moment.js</a> available under the MIT license.
+Using <a href="http://www.chartjs.org/">Chart.js</a>     
+and <a href="http://momentjs.com/">Moment.js</a> available under the MIT license.
+
+The application was inspired by the following resources:
+
+* [Sense-hat API documentation](https://pythonhosted.org/sense-hat/)
+* [w3schools](https://pythonhosted.org/sense-hat/) - for HTML menus, templates and CSS.
+* [ChartJS](http://www.chartjs.org/docs) - Awesome charts used to display environment readings.
+* [Flask](http://flask.pocoo.org/) - Web server used to display data, inspired by [this](https://github.com/pallets/flask/tree/master/examples/flaskr) blog example.
+* [Python sqlite tutorial](http://zetcode.com/db/sqlitepythontutorial/)
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
