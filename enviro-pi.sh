@@ -8,35 +8,36 @@ echo "Control enviro-pi webserver.py and writer.py"
 echo ""
 
 if [ "$1" = "start" ]; then
-    echo "Running: sudo systemctl start supervisor.service"
+    echo "Start: sudo systemctl start supervisor.service"
     sudo systemctl start supervisor.service
 elif [ "$1" = "stop" ]; then
-    echo "Running: sudo systemctl stop supervisor.service"
+    echo "Stop: sudo systemctl stop supervisor.service"
     sudo systemctl stop supervisor.service
 elif [ "$1" = "install" ]; then
     # Run this option to initialize supervisor.service for enviro-pi
-    echo "INFO  - Install symbolic links for systemd supervisor.service"
-    echo "Running: sudo ln -s /home/pi/enviro-pi/supervisor/* /etc/supervisor/conf.d/"
+    echo "Install: sudo ln -s /home/pi/enviro-pi/supervisor/* /etc/supervisor/conf.d/"
     sudo ln -s /home/pi/enviro-pi/supervisor/* /etc/supervisor/conf.d/
     if [ $? == 0 ]; then
         echo "INFO  - Done Install."
     else
         echo "WARN  - Already Installed."
     fi
+    echo ""
     echo "INFO  - To Start enviro-pi supervisor service"
-    echo "        Run this script again with start option]"
+    echo "        Run this script again with start Option]"
 elif [ "$1" = "upgrade" ]; then
-    echo "Upgrade files from https://github.com/pageauc/enviro-pi"
+    echo "Upgrade: Run setup.sh from https://github.com/pageauc/enviro-pi"
     curl -L https://raw.github.com/pageauc/enviro-pi/master/setup.sh | bash
     exit 0
 else
-   echo "Usage: ./enviro-pi.sh [OPTION]"
+   echo "Usage: ./enviro-pi.sh [Option]"
    echo ""
-   echo "  start,     Start supervisor service"
-   echo "  stop,      Stop supervisor service"
-   echo "  install,   Install symbolic links for supervisor service"
-   echo "  upgrade,   Upgrade files from Github Repo"
-   echo "  help,      Display Usage message and Status"
+   echo "Options:"
+   echo "  start      Start supervisor service"
+   echo "  stop       Stop supervisor service"
+   echo "  install    Install symbolic links for supervisor service"
+   echo "  upgrade    Upgrade files from Github Repo"
+   echo "  help       Display Usage message and Status"
    echo ""
    echo "Example:  ./enviro-pi.sh start"
 fi
