@@ -1,6 +1,6 @@
 # Enviro-Pi
 Monitor temperature, humidity, barometric pressure trends with a Raspberry Pi and SenseHat.
-Data is stored to a sqlite3 database default every 300 seconds.  A webserver
+Data is stored in a sqlite3 database. Default updates are every 300 seconds (5 minutes).  A webserver
 allows viewing data status, charts and statistics from a web browser on your local network.
 
 This project is a modified version originally from https://github.com/odlevakp/enviro-pi
@@ -14,16 +14,20 @@ before curl install.
 
     curl -L https://raw.github.com/pageauc/enviro-pi/master/setup.sh | bash
 
-***To Run***
+### To Run
 
     cd ~/enviro-pi
     ./enviro-pi.sh install    
     ./enviro-pi.sh start
-    
+
+### Web Interface 
 To Access enviro-pi web interface See ***./enviro-pi.sh*** HELP.   
 From a computer on your local network, Type or copy/paste url link into web browser url box. 
+On ***Status*** page select ***Refresh Page*** to show current sensehat data. If no data displayed check sensehat setup.
+After startup, allow 15-20 minutes to accumulate chart data.
+On ***Charts*** page, select green box for time range, then ***Load Charts*** to update graphs for selected range.
 
-### Hardware requirements
+### Hardware Requirements
 * Raspberry Pi 2, 3, 4  suggest using raspbian buster or stretch.   
 * RPI SenseHat board   
 * [40 pin GPIO Ribbon Cable](https://thepihut.com/products/gpio-ribbon-cable-for-raspberry-pi-40-pins) (optional)
@@ -43,7 +47,6 @@ It won't go easy the first time, just remember, you are removing the bottom one 
 The writer process is storing environmental readings in a local SQLite database. You can use the CLI client
 to make additional queries on the recorded dataset.
 
-
 ```sql
 $ sqlite3 sensehat.db
 
@@ -57,6 +60,7 @@ datetime(epoch, 'unixepoch', 'localtime') as date
 FROM sensehat;
 ```
 ctrl-d to exit sqlite3 console.   
+
 ***Note*** Time is stored in the `epoch` column as time since epoch. 
 Column `temp_prs` stores temperature from pressure, not used in the web interface.
 
