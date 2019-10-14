@@ -1,7 +1,7 @@
 #!/bin/bash
 # speed-install.sh script written by Claude Pageau 1-Jul-2016
 
-ver="1.0"
+ver="1.1"
 INSTALL_DIR='enviro-pi'  # Default folder install location
 
 cd ~   # change to users home directory
@@ -20,7 +20,7 @@ echo "enviro-pi setup.sh ver $ver"
 echo "-----------------------------------------------"
 echo "Download GitHub Files to $INSTALL_DIR"
 
-mkdir $INSTALL_DIR
+mkdir -p $INSTALL_DIR
 cd $INSTALL_DIR
 mkdir -p static
 mkdir -p supervisor
@@ -58,17 +58,12 @@ Install Complete
 1. Ensure RPI sensehat is installed and working
 2. Test enviro-pi
 
-   cd ~/enviro-pi
-   sudo ./writer.py &
-   sudo ./webserver.py
-
-Access web page to ensure system is working.
-
     cd ~/enviro-pi
-    sudo ln -s /home/pi/enviro-pi/supervisor/* /etc/supervisor/conf.d/
-    sudo systemctl restart supervisor.service
-    sudo supervisorctl
-    ./enviro-pi.sh
+    ./enviro-pi.sh install
+    ./enviro-pi.sh start
+
+Access enviro-pi web interface per instructions.
+Refresh Status page to display sensehat data and confirm system is working.
 
 $INSTALL_DIR version $ver
 Good Luck Claude ...
