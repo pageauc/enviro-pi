@@ -14,14 +14,14 @@ before curl install.
 
     curl -L https://raw.github.com/pageauc/enviro-pi/master/setup.sh | bash
 
-To Run
+***To Run***
 
     cd ~/enviro-pi
     sudo ln -s /home/pi/enviro-pi/supervisor/* /etc/supervisor/conf.d/    
     ./enviro-pi.sh start
     
 Access enviro-pi web page from a web browser using RPI ip_address:webport eg http://192.168.1.245:8080   
-substitute the enviro-pi raspberry pi ip address displayed by enviro-pi.sh script. 
+see url displayed by ***enviro-pi.sh*** script and type into a web browser url box (on your local network). 
 
 ### Hardware requirements
 * Raspberry Pi 2, 3, 4  suggest using raspbian buster or stretch.   
