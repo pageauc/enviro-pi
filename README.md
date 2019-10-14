@@ -29,8 +29,8 @@ After startup, allow 15-20 minutes to accumulate chart data (default updates are
 On ***Charts*** page, select green box for time range, then ***Load Charts*** to update graphs for selected range.
 
 ### Hardware Requirements
-* Raspberry Pi 2, 3, 4  suggest using raspbian buster or stretch.   
-* RPI SenseHat board   
+* [Raspberry Pi](https://www.raspberrypi.org/products/) 2, 3, 4  suggest using Raspbian Buster or Stretch.   
+* [RPI SenseHat board](https://www.raspberrypi.org/products/sense-hat/)   
 * [40 pin GPIO Ribbon Cable](https://thepihut.com/products/gpio-ribbon-cable-for-raspberry-pi-40-pins) (optional)
 
 If you put your SenseHat on top of your Pi, the temperature readings will be
