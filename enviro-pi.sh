@@ -1,12 +1,19 @@
 #!/bin/bash
 # enviro-pi.sh is a systemctl script to control webserver.py and writer.py
 # written by Claude Pageau  https://github.com/pageauc/enviro-p
-version="1.1"
+version="1.2"
 
 echo "$0 ver $version  written by Claude Pageau"
 echo "Control enviro-pi webserver.py and writer.py"
 echo ""
-if [ "$1" = "install" ]; then
+
+if [ "$1" = "start" ]; then
+    echo "Running: sudo systemctl start supervisor.service"
+    sudo systemctl start supervisor.service
+elif [ "$1" = "stop" ]; then
+    echo "Running: sudo systemctl stop supervisor.service"
+    sudo systemctl stop supervisor.service
+elif [ "$1" = "install" ]; then
     # Run this option to initialize supervisor.service for enviro-pi
     echo "INFO  - Install symbolic links for systemd supervisor.service"
     echo "Running: sudo ln -s /home/pi/enviro-pi/supervisor/* /etc/supervisor/conf.d/"
@@ -17,19 +24,18 @@ if [ "$1" = "install" ]; then
         echo "WARN  - Already Installed."
     fi
     echo "INFO  - To Start enviro-pi supervisor service"
-    echo "        Run this script again with start parameter"
-elif [ "$1" = "start" ]; then
-    echo "Running: sudo systemctl start supervisor.service"
-    sudo systemctl start supervisor.service
-elif [ "$1" = "stop" ]; then
-    echo "Running: sudo systemctl stop supervisor.service"
-    sudo systemctl stop supervisor.service
+    echo "        Run this script again with start option]"
+elif [ "$1" = "upgrade" ]; then
+    echo "Upgrade files from https://github.com/pageauc/enviro-pi"
+    curl -L https://raw.github.com/pageauc/enviro-pi/master/setup.sh | bash
+    exit 0
 else
    echo "Usage: ./enviro-pi.sh [OPTION]"
    echo ""
    echo "  start,     Start supervisor service"
    echo "  stop,      Stop supervisor service"
    echo "  install,   Install symbolic links for supervisor service"
+   echo "  upgrade,   Upgrade files from Github Repo"
    echo "  help,      Display Usage message and Status"
    echo ""
    echo "Example:  ./enviro-pi.sh start"
