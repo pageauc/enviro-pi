@@ -17,7 +17,6 @@ before curl install.
 ***To Run***
 
     cd ~/enviro-pi
-    sudo ln -s /home/pi/enviro-pi/supervisor/* /etc/supervisor/conf.d/ 
     ./enviro-pi.sh install    
     ./enviro-pi.sh start
     
