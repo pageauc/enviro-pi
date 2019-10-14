@@ -1,50 +1,66 @@
 #!/bin/bash
-#  systemctl script for enviro-pi webserver.py and writer.py
+# enviro-pi.sh is a systemctl script to control webserver.py and writer.py
+# written by Claude Pageau  https://github.com/pageauc/enviro-p
+version="1.1"
 
-echo "$0"
+echo "$0 ver $version  written by Claude Pageau"
+echo "Control enviro-pi webserver.py and writer.py"
 echo ""
-if [ "$1" = "start" ]; then
-    echo "sudo systemctl start supervisor.service"
+if [ "$1" = "install" ]; then
+    # Run this option to initialize supervisor.service for enviro-pi
+    echo "INFO  - Install symbolic links for systemd supervisor.service"
+    echo "Running: sudo ln -s /home/pi/enviro-pi/supervisor/* /etc/supervisor/conf.d/"
+    sudo ln -s /home/pi/enviro-pi/supervisor/* /etc/supervisor/conf.d/
+    if [ $? == 0 ]; then
+        echo "INFO  - Done Install."
+    else
+        echo "WARN  - Already Installed."
+    fi
+    echo "INFO  - To Start enviro-pi supervisor service"
+    echo "        Run this script again with start parameter"
+elif [ "$1" = "start" ]; then
+    echo "Running: sudo systemctl start supervisor.service"
     sudo systemctl start supervisor.service
 elif [ "$1" = "stop" ]; then
-    echo "sudo systemctl stop supervisor.service"
+    echo "Running: sudo systemctl stop supervisor.service"
     sudo systemctl stop supervisor.service
 else
-   echo "HELP"
-   echo "===="
-   echo "Specify a parameter start or stop"
-   echo "Eg"
-   echo "    ./enviro-pi.sh start"
+   echo "Usage: ./enviro-pi.sh [OPTION]"
    echo ""
-   echo "No parameter shows status"
+   echo "  start,     Start supervisor service"
+   echo "  stop,      Stop supervisor service"
+   echo "  install,   Install symbolic links for supervisor service"
+   echo "  help,      Display Usage message and Status"
+   echo ""
+   echo "Example:  ./enviro-pi.sh start"
 fi
-sleep 3  # wait for any service changes
 
 echo ""
-echo "STATUS"
-echo "======"
+echo "Status:"
+sleep 2  # Allow time for service changes
+
 if [ -z "$( pgrep -f webserver.py )" ]; then
-   echo "webserver.py is NOT Running"
+   echo "INFO  - webserver.py is NOT Running"
 else
    webPID=$(pgrep -f webserver.py)
-   echo "webserver.py is RUNNING PID $webPID"
+   echo "INFO  - webserver.py is RUNNING PID $webPID"
 fi
 
 if [ -z "$( pgrep -f writer.py )" ]; then
-   echo "writer.py is NOT Running"
+   echo "INFO  - writer.py is NOT Running"
 else
    writePID=$(pgrep -f writer.py)
-   echo "writer.py is RUNNING PID $writePID"
+   echo "INFO  - writer.py is RUNNING PID $writePID"
 fi
 
 echo ""
-echo "This RPI's IP Addresses"
-myip=$(hostname -I | cut -d " " -f 1)
-echo "$myip"
-hostname -I | cut -d " " -f 2
-hostname -I | cut -d " " -f 3
-echo "To Access RUNNING enviro-pi web interface. Type or paste url link below"
-echo "into web browser url window. Normally near top of browser app."
-echo "http://$myip:8080"
+myip1=$(hostname -I | cut -d " " -f 1)
+myip2=$(hostname -I | cut -d " " -f 2)
+echo "HELP  - To Access RUNNING enviro-pi web interface"
+echo "        Type or copy/paste url link below"
+echo "        into web browser url window. Normally near top of browser app."
+echo ""
+echo "        Example: http://$myip1:8080"
+echo "                 http://$myip2:8080"
 echo ""
 echo "Bye"
