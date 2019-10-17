@@ -20,6 +20,10 @@ From SSH or Terminal Session input the following commands
     cd ~/enviro-pi
     ./enviro-pi.sh install    
     ./enviro-pi.sh start
+    
+#### Note   
+***./enviro-pi.sh install*** command above will setup systemd supervisor symbolic links (Raspbian Stretch and Buster).  This will auto start webserver.py and writer.py on boot.
+See enviro-pi.sh help for other options. Eg start, stop, upgrade.  Reboot to test autostart.
 
 ### Web Interface 
 To Access enviro-pi web interface See ***./enviro-pi.sh*** HELP.   
