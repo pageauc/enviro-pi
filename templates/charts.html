@@ -28,6 +28,7 @@
         <form method="post">
             <select class="styled-select" name="timespan_select">
          <option {% if selected_timespan == 'day' %}selected{% endif %} value="day">Last 24 hours</option>
+         <option {% if selected_timespan == '2day' %}selected{% endif %} value="2day">Last 2 days</option>
          <option {% if selected_timespan == 'week' %}selected{% endif %} value="week">Last 7 days</option>
          <option {% if selected_timespan == 'month' %}selected{% endif %} value="month">Last 30 days</option>
          <option {% if selected_timespan == '3month' %}selected{% endif %} value="3month">Last 90 days</option>

@@ -102,6 +102,7 @@ def show_charts():
     selected_timespan = 'day'
     options = {
         'day': [SECONDS_IN_DAY, 'Last 24 hours'],
+        '2day': [SECONDS_IN_DAY * 2, 'Last 2 days'],
         'week': [SECONDS_IN_DAY * 7, 'Last 7 days'],
         'month': [SECONDS_IN_DAY * 30, 'Last 30 days'],
         '3month': [SECONDS_IN_DAY * 90, 'Last 90 days'],
@@ -155,6 +156,7 @@ def show_statistics():
     selected_timespan = 'day'
     options = {
         'day': [SECONDS_IN_DAY, 'Last 24 hours'],
+        '2day': [SECONDS_IN_DAY * 2, 'Last 2 days'],
         'week': [SECONDS_IN_DAY * 7, 'Last 7 days'],
         'month': [SECONDS_IN_DAY * 30, 'Last 30 days']}
 

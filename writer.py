@@ -28,6 +28,7 @@ def init_db():
     cur.execute(query)
 
 if __name__ == "__main__":
+
     humidity = round(sense.humidity, 1)
     pressure = round(sense.get_pressure(), 2)
     temperature_from_humidity = round(sense.get_temperature(), 1)
@@ -42,13 +43,13 @@ if __name__ == "__main__":
         print("")
     else:
         print("Saving Data to sensehat.db every %i seconds" % SLEEP_SEC)
-    
+    echo('Wait 15 Seconds for sensehat to warm up')
+    time.sleep(15)
     while True:
         humidity = round(sense.humidity, 1)
         pressure = round(sense.get_pressure(), 2)
         temperature_from_humidity = round(sense.get_temperature(), 1)
-        temperature_from_pressure = round(
-            sense.get_temperature_from_pressure(), 1)
+        temperature_from_pressure = round(sense.get_temperature_from_pressure(), 1)
 
         con = lite.connect("sensehat.db")
         with con:
