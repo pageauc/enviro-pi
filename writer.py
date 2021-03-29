@@ -43,7 +43,7 @@ if __name__ == "__main__":
         print("")
     else:
         print("Saving Data to sensehat.db every %i seconds" % SLEEP_SEC)
-    echo('Wait 15 Seconds for sensehat to warm up')
+    print('Wait 15 Seconds for sensehat to warm up')
     time.sleep(15)
     while True:
         humidity = round(sense.humidity, 1)
