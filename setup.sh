@@ -9,7 +9,7 @@ cd ~   # change to users home directory
 HOME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # List of files to copy to destination RPI using wget
-enviro_files=("README.md" "LICENSE" "webserver.py" "writer.py" "enviro-pi.sh" \
+enviro_files=("README.md" "LICENSE" "webserver.py" "writer.py" "enviro-pi.sh" "config.py" \
 "static/Chart.min.js" "static/favicon.ico" "static/menu.js" \
 "static/moment.min.js" "static/raspberry_pi_logo.png" "static/style.css" \
 "supervisor/enviro-pi-webserver.conf" "supervisor/enviro-pi-writer.conf" \
