@@ -14,6 +14,8 @@ before curl install.
 
     curl -L https://raw.github.com/pageauc/enviro-pi/master/setup.sh | bash
 
+This will install and setup the ~/enviro-pi directory
+
 ### To Run
 From SSH or Terminal Session input the following command to show enviro-pi.sh options.
 
@@ -21,7 +23,8 @@ From SSH or Terminal Session input the following command to show enviro-pi.sh op
     ./enviro-pi.sh install
     ./enviro-pi.sh help
     
-Example of Help screen below    
+Example of Help screen below For more information on supervisor [See Docs](https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-supervisor-on-ubuntu-and-debian-vps)
+   
 ```
 ./enviro-pi.sh ver 1.2  written by Claude Pageau
 Control enviro-pi webserver.py and writer.py
