@@ -49,6 +49,7 @@ dos2unix *py
 dos2unix *sh
 chmod +x *.py
 chmod +x *.sh
+chmod -x config.py
 cd $HOME_DIR
 
 echo "
