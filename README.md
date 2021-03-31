@@ -44,13 +44,20 @@ Options:
 See enviro-pi.sh help for other options. Eg start, stop, upgrade.  Reboot to test autostart.
 
 ### Web Interface 
-To Access enviro-pi web interface See ***./enviro-pi.sh*** HELP.   
-From a computer on your local network, Type or copy/paste url link into web browser url box. 
-On ***Status*** page select ***Refresh Page*** to show current sensehat data. If no data displayed check sensehat setup.
-After startup, allow 15-20 minutes to accumulate chart data (default updates are every 5 minutes).
-On ***Charts*** page, select green box and pull down desired time range, then 
-***Load Charts*** button to update graphs for selected range.
-graphs will update automatically after that but you can always for a refresh with the ***Load Charts*** button
+To Access enviro-pi web interface See ***./enviro-pi.sh*** help.      
+
+From a computer on your local network, Type or copy/paste url link into web browser url box.     
+
+#### On the Enviro-Pi Web Page
+Press top menu ***Status*** button to view current data. Press ***Refresh Page*** button to update data.    
+If no data displayed check sensehat hardware and setup.
+
+After startup, allow 15-20 minutes to accumulate chart data (default updates are every 5 minutes).   
+Press ***Charts*** button to display historical data, Press green box pull down to select time range,    
+then     
+Press ***Load Charts*** button to update graphs for selected range.
+graphs will update automatically after that but you can always refresh with the ***Load Charts*** button
+
 
 ### Hardware Requirements
 * [Raspberry Pi](https://www.raspberrypi.org/products/) 2, 3, 4  suggest using Raspbian Buster or Stretch.   
