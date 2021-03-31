@@ -1,7 +1,7 @@
 #!/bin/bash
 # speed-install.sh script written by Claude Pageau 1-Jul-2016
 
-ver="1.1"
+ver="1.2"
 INSTALL_DIR='enviro-pi'  # Default folder install location
 
 cd ~   # change to users home directory
@@ -48,8 +48,9 @@ sudo apt-get install -yq dos2unix
 dos2unix *py
 dos2unix *sh
 chmod +x *.py
-chmod +x *.sh
 chmod -x config.py
+chmod +x *.sh
+
 cd $HOME_DIR
 
 echo "
