@@ -1,5 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from __future__ import print_function
+PROG_VER = "1.2"
+
 import os
 import sys
 import platform
@@ -11,8 +14,36 @@ from flask import render_template, flash
 from flask import send_from_directory
 import socket
 
+mypath = os.path.abspath(__file__)  # Find the full path of this python script
+# get the path location only (excluding script name)
+base_dir = mypath[0:mypath.rfind("/")+1]
+config_file_path = os.path.join(base_dir, "config.py")
+if os.path.exists(config_file_path):
+    # Read Configuration variables from config.py file
+    try:
+        from config import WRITER_DB_NAME, WRITER_DB_DIR, DEBUG_ON
+    except ImportError:
+        print("ERROR: Problem reading configuration variables from %s" % config_file_path)
+        sys.exit(1)
+else:
+    print("ERROR: Missing config.py file - File Not Found %s" % config_file_path)
+    print("Please investigate problem. Exiting %s ver %s" % (PROG_NAME, PROG_VER))
+    sys.exit(1)
+
+# Get information about this script including name, launch path, etc.
+# This allows script to be renamed or relocated to another directory
+
+prog_filepath = mypath[mypath.rfind("/")+1:mypath.rfind(".")]
+PROG_NAME = os.path.basename(__file__)
+horz_line = "----------------------------------------------------------------------"
+
 # Just a helper variable.
 SECONDS_IN_DAY = 86400
+# Info for /about requests.
+OS_VERSION = ' '.join(platform.linux_distribution())
+PYTHON_VERSION = platform.python_version()
+SENSEHAT_VERSION = pkg_resources.get_distribution("sense_hat").version
+FLASK_VERSION = pkg_resources.get_distribution('flask').version
 
 INFO_MESSAGE = '''
 <br><br>
@@ -33,28 +64,27 @@ except:
     print("        Configure Network and Try Again")
     sys.exit(1)
 
-
-# Info for /about requests.
-OS_VERSION = ' '.join(platform.linux_distribution())
-PYTHON_VERSION = platform.python_version()
-SENSEHAT_VERSION = pkg_resources.get_distribution("sense_hat").version
-FLASK_VERSION = pkg_resources.get_distribution('flask').version
+if DEBUG_ON:
+    print(horz_line)
+    print("%s ver %s  written by Pavol Odlevak and Claude Pageau" % (PROG_NAME, PROG_VER))
+    print("Read/Save Humidity, Temperature and Barometric Pressure data to a sqlite3 database.")
+    print(horz_line)
+    print("Access enviro-pi from web browser at http://%s:8080" % myip)
 
 try:
     sense = SenseHat()
 except OSError as err_msg:
     print("ERROR - Problem accessing sense hat. Investigate ...")
     print("        %s" % err_msg)
-    print("Bye")
+    print("Exit % ver %s" % (PROG_NAME, PROG_VER))
     sys.exit(1)
-
 sense.clear()
 
 app = Flask(__name__)
 # subprocess.check_output(['lsb_release', "-a"]).
 
 app.config.update(dict(
-    DATABASE=os.path.join(app.root_path, 'sensehat.db'),
+    DATABASE=os.path.join(WRITER_DB_DIR, WRITER_DB_NAME),
     DEBUG=True
 ))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
@@ -65,7 +95,6 @@ def connect_db():
     rv = sqlite3.connect(app.config['DATABASE'])
     rv.row_factory = sqlite3.Row
     return rv
-
 
 def get_db():
     """Opens a new database connection if there is none yet for the
@@ -303,7 +332,5 @@ def index():
 
 
 if __name__ == '__main__':
-    print("--------------------------------------------")
-    print("Access web page at http://%s:8080"  % (myip))
-    print("--------------------------------------------")
-    app.run(debug=True, host='0.0.0.0', port=8080)
+    app.run(debug=True, host="0.0.0.0", port=8080)
+

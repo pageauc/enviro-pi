@@ -15,11 +15,26 @@ before curl install.
     curl -L https://raw.github.com/pageauc/enviro-pi/master/setup.sh | bash
 
 ### To Run
-From SSH or Terminal Session input the following commands
+From SSH or Terminal Session input the following command to show enviro-pi.sh options.
 
     cd ~/enviro-pi
-    ./enviro-pi.sh install    
-    ./enviro-pi.sh start
+    ./enviro-pi.sh install
+    ./enviro-pi.sh help
+    
+Example of Help screen below    
+```
+./enviro-pi.sh ver 1.2  written by Claude Pageau
+Control enviro-pi webserver.py and writer.py
+
+Usage: ./enviro-pi.sh [Option]
+
+Options:
+  start      Start supervisor service
+  stop       Stop supervisor service
+  install    Install symbolic links for supervisor service
+  upgrade    Upgrade files from Github Repo
+  help       Display Usage message and Status
+```
     
 #### Note   
 ***./enviro-pi.sh install*** command above will setup systemd supervisor symbolic links (Raspbian Stretch and Buster).  This will auto start webserver.py and writer.py on boot.
@@ -30,7 +45,9 @@ To Access enviro-pi web interface See ***./enviro-pi.sh*** HELP.
 From a computer on your local network, Type or copy/paste url link into web browser url box. 
 On ***Status*** page select ***Refresh Page*** to show current sensehat data. If no data displayed check sensehat setup.
 After startup, allow 15-20 minutes to accumulate chart data (default updates are every 5 minutes).
-On ***Charts*** page, select green box for time range, then ***Load Charts*** to update graphs for selected range.
+On ***Charts*** page, select green box and pull down desired time range, then 
+***Load Charts*** button to update graphs for selected range.
+graphs will update automatically after that but you can always for a refresh with the ***Load Charts*** button
 
 ### Hardware Requirements
 * [Raspberry Pi](https://www.raspberrypi.org/products/) 2, 3, 4  suggest using Raspbian Buster or Stretch.   
@@ -43,6 +60,14 @@ To use your SenseHat with a ribbon cable, you can carefully remove the GPIO head
 It won't go easy the first time, just remember, you are removing the bottom one ;-)
 ![SenseHat Ribbon Cable](http://files.phisolutions.eu/enviro-pi-hw1.jpg "SenseHat with Ribbon Cable")
 
+### Edit Configuraton
+User Variables are stored in the config.py file.  Edit this file to change variables
+
+    cd ~/enviro-pi
+    nano config.py
+
+Press ctrl-x y to exit and save nano changes.
+
 ### Screenshots
 ![Status MacOS screenshot](http://files.phisolutions.eu/status.png "Status MacOS screenshot")
 ![Charts MacOS screenshot](http://files.phisolutions.eu/charts.png "Charts MacOS screenshot")
@@ -52,8 +77,9 @@ It won't go easy the first time, just remember, you are removing the bottom one 
 The writer process is storing environmental readings in a local SQLite database. You can use the CLI client
 to make additional queries on the recorded dataset.
 
-```sql
-$ sqlite3 sensehat.db
+```
+cd ~/enviro-pi
+sqlite3 sensehat.db
 
 sqlite> .headers on
 sqlite> .mode column
