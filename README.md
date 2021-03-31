@@ -40,7 +40,8 @@ Options:
 ```
     
 #### Note   
-***./enviro-pi.sh install*** command above will setup systemd supervisor symbolic links (Raspbian Stretch and Buster).  This will auto start webserver.py and writer.py on boot.
+***./enviro-pi.sh install*** command above will setup systemd supervisor symbolic links (Raspbian Stretch and Buster).   
+This will auto start webserver.py and writer.py on boot.
 See enviro-pi.sh help for other options. Eg start, stop, upgrade.  Reboot to test autostart.
 
 ### Web Interface 
@@ -56,7 +57,7 @@ After startup, allow 15-20 minutes to accumulate chart data (default updates are
 Press ***Charts*** button to display historical data, Press green box pull down to select time range,    
 then     
 Press ***Load Charts*** button to update graphs for selected range.
-graphs will update automatically after that but you can always refresh with the ***Load Charts*** button
+Graphs will update automatically after that but you can always refresh with the ***Load Charts*** button
 
 
 ### Hardware Requirements
@@ -71,7 +72,7 @@ It won't go easy the first time, just remember, you are removing the bottom one 
 ![SenseHat Ribbon Cable](http://files.phisolutions.eu/enviro-pi-hw1.jpg "SenseHat with Ribbon Cable")
 
 ### Edit Configuraton
-User Variables are stored in the config.py file.  Edit this file to change variables
+User Variables are stored in the config.py file.  Edit this file to change variables per comments
 
     cd ~/enviro-pi
     nano config.py
