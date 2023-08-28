@@ -10,6 +10,8 @@ echo ""
 if [ "$1" = "start" ]; then
     echo "Start: sudo systemctl start supervisor.service"
     sudo systemctl start supervisor.service
+    echo "Wait 10 seconds for supervisor sevices to start"
+    sleep 10
 elif [ "$1" = "stop" ]; then
     echo "Stop: sudo systemctl stop supervisor.service"
     sudo systemctl stop supervisor.service

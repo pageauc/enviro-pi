@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-PROG_VER = "1.2"
+PROG_VER = "1.3"
 
 import os
 import sys
@@ -40,7 +40,13 @@ horz_line = "-------------------------------------------------------------------
 # Just a helper variable.
 SECONDS_IN_DAY = 86400
 # Info for /about requests.
-OS_VERSION = ' '.join(platform.linux_distribution())
+try:
+    OS_VERSION = ' '.join(platform.linux_distribution())
+except AttributeError:
+    import distro
+    OS_VERSION = ' '.join(distro.name(pretty=True))
+
+
 PYTHON_VERSION = platform.python_version()
 SENSEHAT_VERSION = pkg_resources.get_distribution("sense_hat").version
 FLASK_VERSION = pkg_resources.get_distribution('flask').version
