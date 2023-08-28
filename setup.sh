@@ -1,7 +1,7 @@
 #!/bin/bash
 # speed-install.sh script written by Claude Pageau 1-Jul-2016
 
-ver="1.2"
+ver="1.3"
 INSTALL_DIR='enviro-pi'  # Default folder install location
 
 cd ~   # change to users home directory
@@ -36,7 +36,7 @@ for fname in "${enviro_files[@]}" ; do
     fi
 done
 
-wget -O templates/about.html https://raw.github.com/pageauc/enviro-pi/master/templates/about.html
+wget -O templates/about.html -q https://raw.github.com/pageauc/enviro-pi/master/templates/about.html
 
 echo "-----------------------------------------------"
 echo "Install Dependencies.  Wait ..."
