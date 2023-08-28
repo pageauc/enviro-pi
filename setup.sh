@@ -36,6 +36,8 @@ for fname in "${enviro_files[@]}" ; do
     fi
 done
 
+wget -O templates/about.html https://raw.github.com/pageauc/enviro-pi/master/templates/about.html
+
 echo "-----------------------------------------------"
 echo "Install Dependencies.  Wait ..."
 echo "-----------------------------------------------"
