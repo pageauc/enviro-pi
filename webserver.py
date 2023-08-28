@@ -44,7 +44,7 @@ try:
     OS_VERSION = ' '.join(platform.linux_distribution())
 except AttributeError:
     import distro
-    OS_VERSION = ' '.join(distro.name(pretty=True))
+    OS_VERSION = ' '.join(distro.linux_distribution(full_distribution_name=True))
 
 
 PYTHON_VERSION = platform.python_version()
