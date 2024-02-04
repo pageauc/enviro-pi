@@ -12,7 +12,7 @@ This project is a modified version originally from https://github.com/odlevakp/e
 **IMPORTANT** - It is suggested you do a Raspbian ***sudo apt-get update*** and ***sudo apt-get upgrade***
 before curl install.  You should have a recent RPI OS distro.  Bullseye or later.
 
-***Step 1*** With mouse left button press copy icon on right side of box below.
+***Step 1*** With mouse left button press copy icon on right side of box below.    
 ***Step 2*** On RPI putty SSH or terminal session right click, select paste then Enter to download and run script.
 
     curl -L https://raw.github.com/pageauc/enviro-pi/master/setup.sh | bash
