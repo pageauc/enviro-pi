@@ -21,13 +21,13 @@ config_file_path = os.path.join(base_dir, "config.py")
 if os.path.exists(config_file_path):
     # Read Configuration variables from config.py file
     try:
-        from config import WRITER_DB_NAME, WRITER_DB_DIR, DEBUG_ON
+        from config import SQLITE3_DB_NAME, SQLITE3_DB_DIR
     except ImportError:
         print("ERROR: Problem reading configuration variables from %s" % config_file_path)
         sys.exit(1)
 else:
-    print("ERROR: Missing config.py file - File Not Found %s" % config_file_path)
-    print("Please investigate problem. Exiting %s ver %s" % (PROG_NAME, PROG_VER))
+    print("ERROR: File Not Found %s" % config_file_path)
+    print("       Investigate problem. Exiting %s ver %s" % (PROG_NAME, PROG_VER))
     sys.exit(1)
 
 # Get information about this script including name, launch path, etc.
@@ -35,7 +35,7 @@ else:
 
 prog_filepath = mypath[mypath.rfind("/")+1:mypath.rfind(".")]
 PROG_NAME = os.path.basename(__file__)
-horz_line = "----------------------------------------------------------------------"
+HORIZ_LINE = "----------------------------------------------------------------------"
 
 # Just a helper variable.
 SECONDS_IN_DAY = 86400
@@ -45,7 +45,6 @@ try:
 except AttributeError:
     import distro
     OS_VERSION = ' '.join(distro.linux_distribution(full_distribution_name=True))
-
 
 PYTHON_VERSION = platform.python_version()
 SENSEHAT_VERSION = pkg_resources.get_distribution("sense_hat").version
@@ -70,13 +69,6 @@ except:
     print("        Configure Network and Try Again")
     sys.exit(1)
 
-if DEBUG_ON:
-    print(horz_line)
-    print("%s ver %s  written by Pavol Odlevak and Claude Pageau" % (PROG_NAME, PROG_VER))
-    print("Read/Save Humidity, Temperature and Barometric Pressure data to a sqlite3 database.")
-    print(horz_line)
-    print("Access enviro-pi from web browser at http://%s:8080" % myip)
-
 try:
     sense = SenseHat()
 except OSError as err_msg:
@@ -90,7 +82,7 @@ app = Flask(__name__)
 # subprocess.check_output(['lsb_release', "-a"]).
 
 app.config.update(dict(
-    DATABASE=os.path.join(WRITER_DB_DIR, WRITER_DB_NAME),
+    DATABASE=os.path.join(SQLITE3_DB_DIR, SQLITE3_DB_NAME),
     DEBUG=True
 ))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)

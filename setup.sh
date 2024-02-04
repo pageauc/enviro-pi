@@ -1,7 +1,7 @@
 #!/bin/bash
 # speed-install.sh script written by Claude Pageau 1-Jul-2016
 
-ver="1.3"
+ver="2.0"
 INSTALL_DIR='enviro-pi'  # Default folder install location
 
 cd ~   # change to users home directory
@@ -9,10 +9,10 @@ cd ~   # change to users home directory
 HOME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # List of files to copy to destination RPI using wget
-enviro_files=("README.md" "LICENSE" "webserver.py" "writer.py" "enviro-pi.sh" "config.py" \
+enviro_files=("README.md" "LICENSE" "webserver.py" "enviro-pi.py" "enviro-pi.sh" "config.py" \
 "static/Chart.min.js" "static/favicon.ico" "static/menu.js" \
 "static/moment.min.js" "static/raspberry_pi_logo.png" "static/style.css" \
-"supervisor/enviro-pi-webserver.conf" "supervisor/enviro-pi-writer.conf" \
+"supervisor/enviro-pi-webserver.conf" "supervisor/enviro-pi.conf" \
 "templates/statistics.html" "templates/charts.html" "templates/statistics.html" "templates/status.html")
 
 echo "-----------------------------------------------"

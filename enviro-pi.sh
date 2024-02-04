@@ -1,20 +1,23 @@
 #!/bin/bash
 # enviro-pi.sh is a systemctl script to control webserver.py and writer.py
 # written by Claude Pageau  https://github.com/pageauc/enviro-p
-version="1.2"
+version="2.0"
 
 echo "$0 ver $version  written by Claude Pageau"
-echo "Control enviro-pi webserver.py and writer.py"
+echo "Control enviro-pi.py webserver.py"
 echo ""
 
 if [ "$1" = "start" ]; then
     echo "Start: sudo systemctl start supervisor.service"
     sudo systemctl start supervisor.service
-    echo "Wait 10 seconds for supervisor sevices to start"
+    echo "Wait 10 seconds for supervisor services to start"
     sleep 10
 elif [ "$1" = "stop" ]; then
     echo "Stop: sudo systemctl stop supervisor.service"
     sudo systemctl stop supervisor.service
+elif [ "$1" = "status" ]; then
+    echo "Status: sudo systemctl status supervisor.service"
+    sudo systemctl status supervisor.service | more
 elif [ "$1" = "install" ]; then
     # Run this option to initialize supervisor.service for enviro-pi
     echo "Install: sudo ln -s /home/pi/enviro-pi/supervisor/* /etc/supervisor/conf.d/"
@@ -37,6 +40,7 @@ else
    echo "Options:"
    echo "  start      Start supervisor service"
    echo "  stop       Stop supervisor service"
+   echo "  status     Status of supervisor service"
    echo "  install    Install symbolic links for supervisor service"
    echo "  upgrade    Upgrade files from Github Repo"
    echo "  help       Display Usage message and Status"
@@ -55,11 +59,11 @@ else
    echo "INFO  - webserver.py is RUNNING PID $webPID"
 fi
 
-if [ -z "$( pgrep -f writer.py )" ]; then
-   echo "INFO  - writer.py is NOT Running"
+if [ -z "$( pgrep -f enviro-pi.py )" ]; then
+   echo "INFO  - enviro-pi.py is NOT Running"
 else
-   writePID=$(pgrep -f writer.py)
-   echo "INFO  - writer.py is RUNNING PID $writePID"
+   enviroPID=$(pgrep -f enviro-pi.py)
+   echo "INFO  - enviro-pi.py is RUNNING PID $enviroPID"
 fi
 
 echo ""

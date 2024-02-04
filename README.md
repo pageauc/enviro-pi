@@ -1,7 +1,8 @@
 # Enviro-Pi
 Monitor temperature, humidity, barometric pressure trends with a Raspberry Pi and SenseHat.
-Data is stored in a sqlite3 database. Default updates are every 300 seconds (5 minutes).  A webserver
-allows viewing data status, charts and statistics from a web browser on your local network.
+Data is stored in a sqlite3 database. Default updates are every 5 minutes).  A webserver
+allows viewing data trends status, charts and statistics from a web browser on your local network.
+Optional feature to upload data to the Weather Underground Personal Weather Station
 
 This project is a modified version originally from https://github.com/odlevakp/enviro-pi
 
@@ -26,7 +27,7 @@ From SSH or Terminal Session input the following command to show enviro-pi.sh op
 Example of Help screen below For more information on supervisor [See Docs](https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-supervisor-on-ubuntu-and-debian-vps)
    
 ```
-./enviro-pi.sh ver 1.2  written by Claude Pageau
+./enviro-pi.sh ver 2.0 written by Claude Pageau
 Control enviro-pi webserver.py and writer.py
 
 Usage: ./enviro-pi.sh [Option]
@@ -34,14 +35,15 @@ Usage: ./enviro-pi.sh [Option]
 Options:
   start      Start supervisor service
   stop       Stop supervisor service
+  status     status of supervisor service
   install    Install symbolic links for supervisor service
   upgrade    Upgrade files from Github Repo
   help       Display Usage message and Status
 ```
     
 #### Note   
-***./enviro-pi.sh install*** command above will setup systemd supervisor symbolic links (Raspbian Stretch and Buster).   
-This will auto start webserver.py and writer.py on boot.
+***./enviro-pi.sh install*** command above will setup systemd supervisor symbolic links.   
+This will auto start webserver.py and enviro-pi.py on boot.
 See enviro-pi.sh help for other options. Eg start, stop, upgrade.  Reboot to test autostart.
 
 ### Web Interface 
@@ -59,6 +61,30 @@ then
 Press ***Load Charts*** button to update graphs for selected range.
 Graphs will update automatically after that but you can always refresh with the ***Load Charts*** button
 
+### Setup Weather Underground Personal Weather Station 
+
+enviro-pi.py has an optional feature to upload your data to the Weather Undergound Personal Weather Station.
+To setup your Raspberry Pi and Sense Hat to upload data
+
+* Create/login to an account at https://www.wunderground.com/login?action=member-devices
+* Add New Device and select Raspberry Pi from pulldown.
+* Setup device name and location per web site instuctions.
+* When device registration is complete you will receive a Station ID and a Station Key.
+* login to your raspberry pi and cd to enviro-pi folder.
+* nano config.py and edit weather station settings to add your Station ID and Key.
+* Edit STATION_UPLOAD_ON = True
+* Ctrl-x y to save changes and exit nano
+
+To test
+
+    ./enviro-pi.sh stop
+    ./enviro-pi.py
+    
+Review logs to ensure uploads are successful.
+If OK restart enviro-pi.py and weather.py 
+
+    ./enviro-pi.sh start
+    
 
 ### Hardware Requirements
 * [Raspberry Pi](https://www.raspberrypi.org/products/) 2, 3, 4  suggest using Raspbian Buster or Stretch.   
@@ -90,7 +116,7 @@ to make additional queries on the recorded dataset.
 
 ```
 cd ~/enviro-pi
-sqlite3 sensehat.db
+sqlite3 enviro-pi.db
 
 sqlite> .headers on
 sqlite> .mode column
