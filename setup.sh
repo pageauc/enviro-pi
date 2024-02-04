@@ -71,7 +71,7 @@ Install Complete
 
     cd ~/enviro-pi
     ./enviro-pi.py
-    
+
     ./enviro-pi.sh install
     ./enviro-pi.sh start
     ./enviro-pi.sh status

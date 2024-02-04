@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-PROG_VER = "2.0"
+PROG_VER = "2.1"
 print("Loading Wait ...")
 import os
 # Get information about this script including name, launch path, etc.
@@ -123,6 +123,18 @@ bars = [
     e, e, e, e, e, e, e, e
 ]
 
+hourglass = [
+    b, b, b, b, b, b, b, b,
+    e, b, b, b, b, b, b, e,
+    e, e, b, b, b, b, e, e,
+    e, e, e, b, b, e, e, e,
+    e, e, e, b, b, e, e, e,
+    e, e, b, b, b, b, e, e,
+    e, b, b, b, b, b, b, e,
+    b, b, b, b, b, b, b, b
+]
+
+
 #------------------------------------------------------
 def init_db():
     """Connects to the specific database."""
@@ -211,8 +223,6 @@ def main():
     if last_minute == 0:
         last_minute = 59
 
-    if SENSEHAT_SCREEN_ON:
-        sense.set_pixel(0, 0, b)
     if STATION_UPLOAD_ON:
        mode = "Upload"
     else:
@@ -326,16 +336,21 @@ if __name__ == "__main__":
         sense.show_message(SENSEHAT_INIT_MSG, text_colour=[255, 255, 0], back_colour=[0, 0, 255])
         # clear the screen
         sense.clear()
+        if SENSEHAT_SCREEN_ON:
+            sense.set_pixels(hourglass)
         # get the current temp to use when checking the previous measurement
         last_temp = round(c_to_f(get_temp()), 1)
-    except:
-        logging.error("CONNECT: FAILED to SenseHat. Investigate.", sys.exc_info()[0])
+    except Exception as err:
+        logging.error("CONNECT: %s", err)
         sys.exit(1)
 
     logging.info("CONNECT: SUCCESS SenseHat OK. Temp is %dF", last_temp)
     try:
         main()
     except KeyboardInterrupt:
+        sense.show_message("BYE", text_colour=[255, 255, 0], back_colour=[0, 0, 255])
+        time.sleep(2)
+        sense.clear()
         print("\nUser Exited with Ctrl-c")
         print("Bye ....")
         sys.exit()
