@@ -17,8 +17,8 @@ before curl install.
 
 This will install and setup the ~/enviro-pi directory
 
-### To Run/test
-From SSH or Terminal Session input the following command to show enviro-pi.sh options.
+### To Run/Test
+From SSH or Terminal Session input the following command to test run enviro-pi.py.
 
     cd ~/enviro-pi
     ./enviro-pi.py
@@ -32,7 +32,7 @@ Monitor log activity to ensure correct operation.
     ./enviro-pi.sh status
     
 Example of Help screen below For more information on supervisor [See Docs](https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-supervisor-on-ubuntu-and-debian-vps)
-   
+ 
 ```
 ./enviro-pi.sh ver 2.0 written by Claude Pageau
 Control enviro-pi webserver.py and enviro-pi.py
