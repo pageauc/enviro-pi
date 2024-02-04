@@ -1,16 +1,18 @@
 # Enviro-Pi
 Monitor temperature, humidity, barometric pressure trends with a Raspberry Pi and SenseHat.
-Data is stored in a sqlite3 database. Default updates are every 5 minutes).  A webserver
-allows viewing data trends status, charts and statistics from a web browser on your local network.
-Optional feature to upload data to the Weather Underground Personal Weather Station
+Data is stored in a sqlite3 database. Default updates are every 5 minutes.  
+
+A webserver allows viewing data trends status, charts and statistics from a web browser on your local network.
+
+Includes optional feature to upload data to the Weather Underground Personal Weather Station web site.
 
 This project is a modified version originally from https://github.com/odlevakp/enviro-pi
 
 ### Quick Install
 **IMPORTANT** - It is suggested you do a Raspbian ***sudo apt-get update*** and ***sudo apt-get upgrade***
-before curl install.
+before curl install.  You should have a recent RPI OS distro.  Bullseye or later.
 
-***Step 1*** With mouse left button highlight curl command in code box below. Right click mouse in **highlighted** area and Copy.
+***Step 1*** With mouse left button press copy icon on right side of box below.
 ***Step 2*** On RPI putty SSH or terminal session right click, select paste then Enter to download and run script.
 
     curl -L https://raw.github.com/pageauc/enviro-pi/master/setup.sh | bash
@@ -23,7 +25,9 @@ From SSH or Terminal Session input the following command to test run enviro-pi.p
     cd ~/enviro-pi
     ./enviro-pi.py
     
-Monitor log activity to ensure correct operation.    
+Monitor log activity to ensure correct operation. Note if sense hat display is enabled red up arrow indicates
+temp rise since last reading. blue down arrow temperature decrease.  Red/blue stripes no change.  The pixel
+in the top left indicates upload status. Green last upload successful. Red last upload failed.    
     
 ### Setup enviro-pi.py and weather.py as background tasks 
     
