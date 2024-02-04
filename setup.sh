@@ -9,7 +9,7 @@ cd ~   # change to users home directory
 HOME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # List of files to copy to destination RPI using wget
-enviro_files=("README.md" "LICENSE" "webserver.py" "enviro-pi.py" "enviro-pi.sh" "config.py" \
+enviro_files=("README.md" "LICENSE" "webserver.py" "enviro-pi.py" "enviro-pi.sh" \
 "static/Chart.min.js" "static/favicon.ico" "static/menu.js" \
 "static/moment.min.js" "static/raspberry_pi_logo.png" "static/style.css" \
 "supervisor/enviro-pi-webserver.conf" "supervisor/enviro-pi.conf" \
@@ -38,6 +38,13 @@ done
 
 wget -O templates/about.html -q https://raw.github.com/pageauc/enviro-pi/master/templates/about.html
 
+if [ -f config.py ]; then     # check if local file exists.
+    wget -O config.py.new -q --show-progress https://raw.github.com/pageauc/enviro-pi/master/config.py
+else
+    wget -O config.py -q --show-progress https://raw.github.com/pageauc/enviro-pi/master/config.py
+fi
+
+
 echo "-----------------------------------------------"
 echo "Install Dependencies.  Wait ..."
 echo "-----------------------------------------------"
@@ -63,8 +70,11 @@ Install Complete
 2. Test enviro-pi
 
     cd ~/enviro-pi
+    ./enviro-pi.py
+    
     ./enviro-pi.sh install
     ./enviro-pi.sh start
+    ./enviro-pi.sh status
 
 Access enviro-pi web interface per instructions.
 Refresh Status page to display sensehat data and confirm system is working.
