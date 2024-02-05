@@ -313,11 +313,12 @@ def main():
                             html_status = response.text.upper().rstrip('\n')
                             logging.info("  UPLOAD : %s", html_status)
                             if SENSEHAT_SCREEN_ON:
-                                sense.set_pixel(0, 0, g)
+                                if html_status == "SUCCESS":
+                                    sense.set_pixel(0, 0, g)
+                                else:
+                                    sense.set_pixel(0, 0, r)
                         except Exception as err:
                             logging.warning("  %s",err)
-                            if SENSEHAT_SCREEN_ON:
-                                sense.set_pixel(0, 0, r)
                     else:
                         logging.warning("  UPLOAD: Disabled per STATION_UPLOAD_ON = %s",
                                         STATION_UPLOAD_ON)
