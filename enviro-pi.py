@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-PROG_VER = "2.1"
+PROG_VER = "2.2"
 print("Loading Wait ...")
 import os
 # Get information about this script including name, launch path, etc.
@@ -15,17 +15,20 @@ HORIZ_LINE = "------------------------------------------------------------------
 
 print(HORIZ_LINE)
 print("%s ver %s written by Pavol Odlevak and Claude Pageau" % (PROG_NAME, PROG_VER))
-print("\nRead/Save Humidity, Temperature and Barometric Pressure data to a sqlite3 database.")
-print("Run webserver.py to View Data History graphs via Web Browser.")
-print("Optionally upload data to the Weather Underground Personal Weather Station (PWS)")
+print("\nRead/Save SenseHat Humidity, Temperature and Barometric Pressure data to a sqlite3 database.")
+print("Run webserver.py to View Data History graphs via Web Browser.\n")
+print("Optional: Upload data to the Weather Underground Personal Weather Station (PWS)")
 print(HORIZ_LINE)
 
 import time
 import datetime
 import sys
 import logging
-from urllib.parse import urlencode
-import urllib.request
+
+try:
+    import requests
+except ImportError:
+    import pip._vendor.requests as requests
 
 try:
     import sqlite3 as lite
@@ -80,7 +83,7 @@ except OSError as err_msg:
 # Create path to Sqlite3 Database File
 sqlite3_db_path = os.path.join(SQLITE3_DB_DIR, SQLITE3_DB_NAME)
 
-# constants used to display an up and down arrows plus bars
+# constants used to display an up and down arrows plus bars and hourglass
 # modified from https://www.raspberrypi.org/learning/getting-started-with-the-sense-hat/worksheet/
 # set up the colours (blue, green, red, empty)
 
@@ -306,12 +309,9 @@ def main():
                                        }
                         try:
                             logging.info("  CONNECT: Station ID %s", STATION_ID)
-                            upload_url = STATION_WU_URL + "?" + urlencode(weather_data)
-                            response = urllib.request.urlopen(upload_url)
-                            html_status = response.read().decode("utf-8")
-                            html_status = html_status.upper().rstrip('\n')
+                            response = requests.get(STATION_WU_URL, weather_data)
+                            html_status = response.text.upper().rstrip('\n')
                             logging.info("  UPLOAD : %s", html_status)
-                            response.close()  # best practice to close the file
                             if SENSEHAT_SCREEN_ON:
                                 sense.set_pixel(0, 0, g)
                         except Exception as err:
@@ -344,7 +344,7 @@ if __name__ == "__main__":
         logging.error("CONNECT: %s", err)
         sys.exit(1)
 
-    logging.info("CONNECT: SUCCESS SenseHat OK. Temp is %dF", last_temp)
+    logging.info("READING: SUCCESS SenseHat OK. Temp is %dF", last_temp)
     try:
         main()
     except KeyboardInterrupt:
