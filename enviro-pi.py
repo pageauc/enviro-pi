@@ -277,17 +277,16 @@ def main():
                     now = datetime.datetime.now()
                     # did the temperature go up or down?
                     if SENSEHAT_SCREEN_ON:
-                        if last_temp != temp_f:
-                            if last_temp > temp_f:
-                                # display a blue, down arrow
-                                sense.set_pixels(arrow_down)
-                            else:
-                                # display a red, up arrow
-                                sense.set_pixels(arrow_up)
-                        else:
+                        if temp_f == last_temp:
                             # temperature stayed the same
                             # display red and blue bars
-                            sense.set_pixels(bars)
+                            sense.set_pixels(bars)                        
+                        elif temp_f > last_temp:
+                            # display a red, up arrow
+                            sense.set_pixels(arrow_up)
+                        else:
+                            # display a blue, down arrow
+                            sense.set_pixels(arrow_down)
 
                     # set last_temp to the current temperature before we measure again
                     last_temp = temp_f
