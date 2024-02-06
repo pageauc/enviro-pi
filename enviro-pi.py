@@ -280,7 +280,7 @@ def main():
                         if temp_f == last_temp:
                             # temperature stayed the same
                             # display red and blue bars
-                            sense.set_pixels(bars)                        
+                            sense.set_pixels(bars)
                         elif temp_f > last_temp:
                             # display a red, up arrow
                             sense.set_pixels(arrow_up)
