@@ -26,3 +26,7 @@ SENSEHAT_TEMP_OFFSET = 5.0    # Deg c to correct temperature due to rpi cpu heat
 SQLITE3_DB_ON = True              # default= True Write data to Sqlite DB
 SQLITE3_DB_NAME = "enviro-pi.db"  # Default="enviro-pi.db" Filename for sqlite3 database
 SQLITE3_DB_DIR = "./"             # Default="./"  Directory location for sqlite3 database
+
+# Webserver Settings
+# ------------------
+WEB_PORT_NUM = 8080        # Default= 8080  Webserver port number

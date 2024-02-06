@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-PROG_VER = "1.3"
+PROG_VER = "2.2"
 
 import os
 import sys
@@ -21,13 +21,14 @@ config_file_path = os.path.join(base_dir, "config.py")
 if os.path.exists(config_file_path):
     # Read Configuration variables from config.py file
     try:
-        from config import SQLITE3_DB_NAME, SQLITE3_DB_DIR
-    except ImportError:
-        print("ERROR: Problem reading configuration variables from %s" % config_file_path)
+        from config import SQLITE3_DB_NAME, SQLITE3_DB_DIR, WEB_PORT_NUM
+    except Exception as err:
+ #   except ImportError:
+        print("ERROR: %s" % err)
         sys.exit(1)
 else:
     print("ERROR: File Not Found %s" % config_file_path)
-    print("       Investigate problem. Exiting %s ver %s" % (PROG_NAME, PROG_VER))
+    print("       Investigate problem. Exiting %s " % (PROG_NAME, PROG_VER))
     sys.exit(1)
 
 # Get information about this script including name, launch path, etc.
@@ -39,6 +40,7 @@ HORIZ_LINE = "------------------------------------------------------------------
 
 # Just a helper variable.
 SECONDS_IN_DAY = 86400
+
 # Info for /about requests.
 try:
     OS_VERSION = ' '.join(platform.linux_distribution())
@@ -82,7 +84,7 @@ app = Flask(__name__)
 # subprocess.check_output(['lsb_release', "-a"]).
 
 app.config.update(dict(
-    DATABASE=os.path.join(SQLITE3_DB_DIR, SQLITE3_DB_NAME),
+    DATABASE = os.path.join(SQLITE3_DB_DIR, SQLITE3_DB_NAME),
     DEBUG=True
 ))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
@@ -330,5 +332,5 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=8080)
+    app.run(debug=True, host="0.0.0.0", port=WEB_PORT_NUM)
 
