@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="900"> <!-- Refresh every 15 minutes -->
     <title>Enviro-Pi</title>
     <script src='static/moment.min.js'></script>
     <script src='static/Chart.min.js'></script>
@@ -35,7 +36,7 @@
          <option {% if selected_timespan == '6month' %}selected{% endif %} value="6month">Last 180 days</option>
          <option {% if selected_timespan == 'year' %}selected{% endif %} value="year">Last 365 days</option>
        </select>
-            <input type="submit" class="button chart" value="Load Charts">
+            <input type="submit" class="button chart" value="Load/Refresh Charts">
         </form>
     </div>
     <h3 style="padding-left:16px">Humidity for {{header_timespan}}</h3>
@@ -68,7 +69,7 @@
         var temperatureData = {
             labels: [{% for item in labels %}"{{item}}",{% endfor %}],
             datasets: [{
-                label: "Tepmerature (°C)",
+                label: "Temperature (°C)",
                 fill: false,
                 lineTension: 0.1,
                 backgroundColor: "rgba(255,102,102,0.4)",
