@@ -4,12 +4,7 @@ from __future__ import print_function
 PROG_VER = "2.2"
 print("Loading Wait ...")
 import os
-# Get information about this script including name, launch path, etc.
-# This allows script to be renamed or relocated to another directory
-mypath = os.path.abspath(__file__)  # Find the full path of this python script
-# get the path location only (excluding script name)
-base_dir = mypath[0:mypath.rfind("/")+1]
-prog_filepath = mypath[mypath.rfind("/")+1:mypath.rfind(".")]
+
 PROG_NAME = os.path.basename(__file__)
 HORIZ_LINE = "----------------------------------------------------------------------"
 
@@ -37,6 +32,11 @@ except ImportError:
     print("sudo apt install sqlite3")
     sys.exit(1)
 
+# Get information about this script including name, launch path, etc.
+# This allows script to be renamed or relocated to another directory
+mypath = os.path.abspath(__file__)  # Find the full path of this python script
+# get the path location only (excluding script name)
+base_dir = mypath[0:mypath.rfind("/")+1]
 # Read configuration settings from file
 config_file_path = os.path.join(base_dir, "config.py")
 if os.path.exists(config_file_path):
@@ -215,6 +215,9 @@ def get_temp():
 
 #------------------------------------------------------
 def main():
+    if SENSEHAT_SCREEN_ON:
+        sense.set_pixels(hourglass)
+
     if SQLITE3_DB_ON:
         init_db()  # Initialize the sqlite database
         con = lite.connect(sqlite3_db_path)
@@ -234,10 +237,10 @@ def main():
     # infinite loop to continuously Read/Upload weather values
     while True:
         # The temp measurement smoothing algorithm's accuracy is based
-        # on frequent measurements, so we'll take measurements every 5 seconds
+        # on frequent measurements, so we'll take measurements every 10 seconds
         # but only upload on STATION_UPLOAD_MINUTES
         current_second = datetime.datetime.now().second
-        # are we at the top of the minute or at a 5 second interval?
+        # are we at the top of the minute or at a 10 second interval?
         if (current_second == 0) or ((current_second % 10) == 0):
             # ========================================================
             # read values from the Sense HAT
@@ -287,7 +290,6 @@ def main():
                         else:
                             # display a blue, down arrow
                             sense.set_pixels(arrow_down)
-
                     # set last_temp to the current temperature before we measure again
                     last_temp = temp_f
 
@@ -336,8 +338,6 @@ if __name__ == "__main__":
         sense.show_message(SENSEHAT_INIT_MSG, text_colour=[255, 255, 0], back_colour=[0, 0, 255])
         # clear the screen
         sense.clear()
-        if SENSEHAT_SCREEN_ON:
-            sense.set_pixels(hourglass)
         # get the current temp to use when checking the previous measurement
         last_temp = round(c_to_f(get_temp()), 1)
     except Exception as err:
