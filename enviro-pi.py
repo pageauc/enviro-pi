@@ -1,10 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-PROG_VER = "2.2"
 print("Loading Wait ...")
 import os
 
+PROG_VER = "2.2"
 PROG_NAME = os.path.basename(__file__)
 HORIZ_LINE = "----------------------------------------------------------------------"
 
