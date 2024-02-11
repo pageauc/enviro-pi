@@ -9,10 +9,10 @@ cd ~   # change to users home directory
 HOME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # List of files to copy to destination RPI using wget
-enviro_files=("README.md" "LICENSE" "webserver.py" "enviro-pi.py" "enviro-pi.sh" \
+enviro_files=("README.md" "LICENSE" "enviro-web.py" "enviro-pi.py" "run.sh" \
 "static/Chart.min.js" "static/favicon.ico" "static/menu.js" \
 "static/moment.min.js" "static/raspberry_pi_logo.png" "static/style.css" \
-"supervisor/enviro-pi-webserver.conf" "supervisor/enviro-pi.conf" \
+"supervisor/enviro-web.conf" "supervisor/enviro-pi.conf" \
 "templates/statistics.html" "templates/charts.html" "templates/statistics.html" "templates/status.html")
 
 echo "-----------------------------------------------"
@@ -72,9 +72,9 @@ Install Complete
     cd ~/enviro-pi
     ./enviro-pi.py
 
-    ./enviro-pi.sh install
-    ./enviro-pi.sh start
-    ./enviro-pi.sh status
+    ./run.sh install
+    ./run.sh start
+    ./run.sh status
 
 Access enviro-pi web interface per instructions.
 Refresh Status page to display sensehat data and confirm system is working.

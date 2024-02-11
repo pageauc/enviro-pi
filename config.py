@@ -29,4 +29,4 @@ SQLITE3_DB_DIR = "./"             # Default="./"  Directory location for sqlite3
 
 # Webserver Settings
 # ------------------
-WEB_PORT_NUM = 8080        # Default= 8080  Webserver port number
+WEB_PORT_NUM = 8090        # Default= 8080  Webserver port number

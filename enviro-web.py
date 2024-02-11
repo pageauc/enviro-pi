@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-PROG_VER = "2.2"
+PROG_VER = "1.3"
 
 import os
 import sys
