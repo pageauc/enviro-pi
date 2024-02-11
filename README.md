@@ -25,40 +25,50 @@ From SSH or Terminal Session input the following command to test run enviro-pi.p
     cd ~/enviro-pi
     ./enviro-pi.py
     
-Monitor log activity to ensure correct operation. Note if sense hat display is enabled red up arrow indicates
-temp rise since last reading. blue down arrow temperature decrease.  Red/blue stripes no change.  The pixel
-in the top left indicates upload status. Green last upload successful. Red last upload failed.    
+Monitor log activity to ensure correct operation. 
+
+Note if sense hat display is enabled 
+* Red up arrow indicates temp rise since last reading. 
+* Blue down arrow temperature decreased since lasr reading.  
+* Red/blue stripes no change.  
+* pixel in top left indicates upload status. Green last upload successful. Red last upload failed.    
     
-### Setup enviro-pi.py and weather.py as background tasks 
+### Setup enviro-pi.py and enviro-web.py as background tasks 
     
-    ./enviro-pi.sh install
-    ./enviro-pi.sh help
-    ./enviro-pi.sh status
+    ./run.sh help
+    ./run.sh install
+    ./run.sh status
+    ./run.sh start
+    ./run.sh status
     
 Example of Help screen below For more information on supervisor [See Docs](https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-supervisor-on-ubuntu-and-debian-vps)
  
 ```
-./enviro-pi.sh ver 2.0 written by Claude Pageau
-Control enviro-pi webserver.py and enviro-pi.py
+./run.sh ver 2.0  written by Claude Pageau
+Control enviro-pi.py enviro-web.py
 
-Usage: ./enviro-pi.sh [Option]
+Usage: ./run.sh [Option]
 
 Options:
-  start      Start supervisor service
-  stop       Stop supervisor service
-  status     status of supervisor service
-  install    Install symbolic links for supervisor service
-  upgrade    Upgrade files from Github Repo
-  help       Display Usage message and Status
+  start        Start supervisor service
+  stop         Stop supervisor service
+  status       Status of supervisor service
+  install      Install symbolic links for supervisor service
+  uninstall    Uninstall symbolic links for supervisor service
+  upgrade      Upgrade files from Github Repo
+  help         Display Usage message and Status
+
+Example:  ./run.sh status
+
 ```
     
 #### Note   
-***./enviro-pi.sh install*** command above will setup systemd supervisor symbolic links.   
-This will auto start webserver.py and enviro-pi.py on boot.
-See enviro-pi.sh help for other options. Eg start, stop, upgrade.  Reboot to test autostart.
+***./run.sh install*** command above will setup systemd supervisor symbolic links.   
+This will auto start enviro-web.py and enviro-pi.py on boot.
+See run.sh help for other options. Eg start, stop, upgrade.  Reboot to test autostart.
 
 ### Web Interface 
-To Access enviro-pi web interface See ***./enviro-pi.sh*** help.      
+To Access enviro-pi web interface See ***./run.sh*** help.      
 
 From a computer on your local network, Type or copy/paste url link into web browser url box.     
 
@@ -69,7 +79,7 @@ If no data displayed check sensehat hardware and setup.
 After startup, allow 15-20 minutes to accumulate chart data (default updates are every 5 minutes).   
 Press ***Charts*** button to display historical data, Press green box pull down to select time range,    
 then     
-Press ***Load Charts*** button to update graphs for selected range.
+Press ***Load/Refresh Charts*** button to update graphs for selected range.
 Graphs will update automatically after that but you can always refresh with the ***Load Charts*** button
 
 ### Setup Weather Underground Personal Weather Station 
@@ -82,19 +92,19 @@ To setup your Raspberry Pi and Sense Hat to upload data
 * Setup device name and location per web site instuctions.
 * When device registration is complete you will receive a Station ID and a Station Key.
 * login to your raspberry pi and cd to enviro-pi folder.
-* nano config.py and edit weather station settings to add your Station ID and Key.
+* nano config.py and edit weather station settings to add your STATION_ID AND STATION_KEY.
 * Edit STATION_UPLOAD_ON = True
 * Ctrl-x y to save changes and exit nano
 
 To test
 
-    ./enviro-pi.sh stop
+    ./run.sh stop
     ./enviro-pi.py
     
 Review logs to ensure uploads are successful.
 If OK restart enviro-pi.py and weather.py 
 
-    ./enviro-pi.sh start
+    ./run.sh start
     
 
 ### Hardware Requirements
