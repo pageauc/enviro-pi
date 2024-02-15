@@ -137,7 +137,7 @@ hourglass = [
     b, b, b, b, b, b, b, b
 ]
 
-
+def init_db():
     """Connects to the specific database."""
     con = lite.connect(sqlite3_db_path)
     cur = con.cursor()
@@ -153,7 +153,7 @@ hourglass = [
         print("Please Investigate Problem. Exiting %s ver %s" % (PROG_NAME, PROG_VER))
         sys.exit(1)
 
-
+def c_to_f(input_temp):
     # convert input_temp from Celsius to Fahrenheit
     return (input_temp * 1.8) + 32
 
