@@ -57,7 +57,7 @@ if LOGGING_ON:
                         datefmt="%Y-%m-%d %H:%M:%S",
                        )
 else:
-    print("WARNING: Logging Disabled per LOGGING_ON = %s" %LOGGING_ON)
+    print("WARNING: Logging Disabled per LOGGING_ON = %s" % LOGGING_ON)
 
 # Check that STATION_UPLOAD_MINUTES is not None and  less than 60
 if (STATION_UPLOAD_MINUTES is None) or (STATION_UPLOAD_MINUTES > 60):
@@ -138,8 +138,6 @@ hourglass = [
 ]
 
 
-#------------------------------------------------------
-def init_db():
     """Connects to the specific database."""
     con = lite.connect(sqlite3_db_path)
     cur = con.cursor()
@@ -156,20 +154,17 @@ def init_db():
         sys.exit(1)
 
 
-#------------------------------------------------------
-def c_to_f(input_temp):
     # convert input_temp from Celsius to Fahrenheit
     return (input_temp * 1.8) + 32
 
 
-#------------------------------------------------------
 def get_cpu_temp():
     # 'borrowed' from https://www.raspberrypi.org/forums/viewtopic.php?f=104&t=111457
     # executes a command at the OS to pull in the CPU temperature
     res = os.popen('vcgencmd measure_temp').readline()
     return float(res.replace("temp=", "").replace("'C\n", ""))
 
-#------------------------------------------------------
+
 def get_smooth(x):
     # use moving average to smooth readings
 
@@ -186,7 +181,6 @@ def get_smooth(x):
     return xs
 
 
-#------------------------------------------------------
 def get_temp():
     # ====================================================================
     # Unfortunately, getting an accurate temperature reading from the
@@ -213,7 +207,6 @@ def get_temp():
     return t_corr - SENSEHAT_TEMP_OFFSET
 
 
-#------------------------------------------------------
 def main():
     if SENSEHAT_SCREEN_ON:
         sense.set_pixels(hourglass)
