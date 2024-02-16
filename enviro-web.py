@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-PROG_VER = "1.3"
+PROG_VER = "1.4"
 
 import os
 import sys
@@ -46,7 +46,7 @@ try:
     OS_VERSION = ' '.join(platform.linux_distribution())
 except AttributeError:
     import distro
-    OS_VERSION = ' '.join(distro.linux_distribution(full_distribution_name=True))
+    OS_VERSION = distro.name(pretty=True)
 
 PYTHON_VERSION = platform.python_version()
 SENSEHAT_VERSION = pkg_resources.get_distribution("sense_hat").version
