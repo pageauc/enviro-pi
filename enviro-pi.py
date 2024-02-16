@@ -137,6 +137,7 @@ hourglass = [
     b, b, b, b, b, b, b, b
 ]
 
+
 def init_db():
     """Connects to the specific database."""
     con = lite.connect(sqlite3_db_path)
@@ -152,6 +153,7 @@ def init_db():
         print("ERROR: Could Not Find sqlite3 database at %s" % sqlite3_db_path)
         print("Please Investigate Problem. Exiting %s ver %s" % (PROG_NAME, PROG_VER))
         sys.exit(1)
+
 
 def c_to_f(input_temp):
     # convert input_temp from Celsius to Fahrenheit
