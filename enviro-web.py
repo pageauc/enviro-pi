@@ -76,7 +76,7 @@ try:
 except OSError as err_msg:
     print("ERROR - Problem accessing sense hat. Investigate ...")
     print("        %s" % err_msg)
-    print("Exit % ver %s" % (PROG_NAME, PROG_VER))
+    print("Exit %s ver %s" % (PROG_NAME, PROG_VER))
     sys.exit(1)
 sense.clear()
 
