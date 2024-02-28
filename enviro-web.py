@@ -23,7 +23,6 @@ if os.path.exists(config_file_path):
     try:
         from config import SQLITE3_DB_NAME, SQLITE3_DB_DIR, WEB_PORT_NUM
     except Exception as err:
- #   except ImportError:
         print("ERROR: %s" % err)
         sys.exit(1)
 else:
