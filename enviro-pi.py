@@ -222,7 +222,7 @@ def main():
                 # we're only going to take measurements every STATION_UPLOAD_MINUTES minutes
                 if (current_minute == 0) or ((current_minute % STATION_UPLOAD_MINUTES) == 0):
                     # Update sqlite3 database
-                    logging.info("  READING: Temp: %sF (%sC), Press: %s inHg, Hum: %s%%",
+                    logging.info("  READING: Temp: %sF (%sC), Press: %s hPa, Hum: %s%%",
                                  temp_f, temp_c, pressure, humidity)
                     if SQLITE3_DB_ON:
                         logging.info("  SQLITE3: INSERT Data INTO table sensehat at %s", sqlite3_db_path)
