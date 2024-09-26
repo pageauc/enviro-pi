@@ -11,6 +11,13 @@
 </head>
 
 <body>
+
+    <script>
+	if ( window.history.replaceState ) {
+		window.history.replaceState( null, null, window.location.href );
+       }
+    </script>
+
     <ul class="topnav" id="myTopnav">
         <li><a href="/">Status</a></li>
         <li><a href="/charts">Charts</a></li>

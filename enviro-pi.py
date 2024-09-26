@@ -4,7 +4,7 @@ from __future__ import print_function
 print("Loading Wait ...")
 import os
 
-PROG_VER = "2.2"
+PROG_VER = "2.3"
 PROG_NAME = os.path.basename(__file__)
 HORIZ_LINE = "----------------------------------------------------------------------"
 
@@ -167,46 +167,11 @@ def get_cpu_temp():
     return float(res.replace("temp=", "").replace("'C\n", ""))
 
 
-def get_smooth(x):
-    # use moving average to smooth readings
-
-    # do we have the t object?
-    if not hasattr(get_smooth, "t"):
-        # then create it
-        get_smooth.t = [x, x, x]
-    # manage the rolling previous values
-    get_smooth.t[2] = get_smooth.t[1]
-    get_smooth.t[1] = get_smooth.t[0]
-    get_smooth.t[0] = x
-    # average the three last temperatures
-    xs = (get_smooth.t[0] + get_smooth.t[1] + get_smooth.t[2]) / 3
-    return xs
-
-
 def get_temp():
-    # ====================================================================
-    # Unfortunately, getting an accurate temperature reading from the
-    # Sense HAT is improbable, see here:
-    # https://www.raspberrypi.org/forums/viewtopic.php?f=104&t=111457
-    # so we'll have to do some approximation of the actual temp
-    # taking CPU temp into account. The Pi foundation recommended
-    # using the following:
-    # http://yaab-arduino.blogspot.co.uk/2016/08/accurate-temperature-reading-sensehat.html
-    # ====================================================================
-    # First, get temp readings from both sensors
-    t1 = sense.get_temperature_from_humidity()
-    t2 = sense.get_temperature_from_pressure()
-    # t becomes the average of the temperatures from both sensors
-    t = (t1 + t2) / 2
-    # Now, grab the CPU temperature
-    t_cpu = get_cpu_temp()
-    # Calculate the 'real' temperature compensating for CPU heating
-    t_corr = t - ((t_cpu - t) / 1.5)
-    # Finally, average out that value across the last three readings
-    t_corr = get_smooth(t_corr)
-    # convoluted, right?
-    # Return the calculated temperature
-    return t_corr - SENSEHAT_TEMP_OFFSET
+    # get temp readings from sensor
+    temp_c = sense.get_temperature()
+
+    return temp_c - SENSEHAT_TEMP_OFFSET
 
 
 def main():
@@ -216,7 +181,7 @@ def main():
     if SQLITE3_DB_ON:
         init_db()  # Initialize the sqlite database
         con = lite.connect(sqlite3_db_path)
-    last_temp = get_temp()
+    last_temp = round(c_to_f(get_temp()), 1)
     # initialize the lastMinute variable to current time to start
     last_minute = datetime.datetime.now().minute
     # on startup, just use the previous minute as lastMinute
@@ -240,14 +205,13 @@ def main():
             # ========================================================
             # read values from the Sense HAT
             # ========================================================
-            # calculate the temperature
-            calc_temp = get_temp()
             # now use it for our purposes
-            temp_c = round(calc_temp, 1)
-            temp_f = round(c_to_f(calc_temp), 1)
+            temp_c = round(get_temp(), 1)
+            temp_f = round(c_to_f(get_temp()), 1)
             humidity = round(sense.get_humidity(), 0)
             # convert pressure from millibars to inHg before posting
-            pressure = round(sense.get_pressure() * 0.0295300, 1)
+            pressure_inHg = round(sense.get_pressure() * 0.0295300, 1)
+            pressure = round(sense.get_pressure(), 1)  # hpa
             # get the current minute
             current_minute = datetime.datetime.now().minute
             # is it the same minute as the last time we checked?
@@ -258,14 +222,14 @@ def main():
                 # we're only going to take measurements every STATION_UPLOAD_MINUTES minutes
                 if (current_minute == 0) or ((current_minute % STATION_UPLOAD_MINUTES) == 0):
                     # Update sqlite3 database
-                    logging.info("  READING: Temp: %sF(%sC), Press: %s inHg, Hum: %s%%",
+                    logging.info("  READING: Temp: %sF (%sC), Press: %s inHg, Hum: %s%%",
                                  temp_f, temp_c, pressure, humidity)
                     if SQLITE3_DB_ON:
                         logging.info("  SQLITE3: INSERT Data INTO table sensehat at %s", sqlite3_db_path)
                         with con:
                             cur = con.cursor()
                             command = "INSERT INTO sensehat VALUES(%i, %0.2f, %0.2f, %0.2f, %0.2f)" % (
-                                      int(time.time()), humidity, pressure, temp_c, pressure)
+                                      int(time.time()), humidity, pressure, temp_c, temp_c)
                             try:
                                 cur.execute(command)
                             except Exception as err:
@@ -339,7 +303,7 @@ if __name__ == "__main__":
         logging.error("CONNECT: %s", err)
         sys.exit(1)
 
-    logging.info("READING: SUCCESS SenseHat OK. Temp is %dF", last_temp)
+    logging.info("READING: SUCCESS SenseHat OK. Temp is %dF (%dC)", last_temp, get_temp())
     try:
         main()
     except KeyboardInterrupt:
