@@ -1,8 +1,6 @@
 #!/bin/bash
 # speed-install.sh script written by Claude Pageau 1-Jul-2016
 
-ver="1.4"
-=======
 ver="2.0"
 INSTALL_DIR='enviro-pi'  # Default folder install location
 
