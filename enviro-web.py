@@ -39,8 +39,6 @@ HORIZ_LINE = "------------------------------------------------------------------
 
 # Just a helper variable.
 SECONDS_IN_DAY = 86400
-<<<<<<< HEAD
-=======
 
 # Info for /about requests.
 try:
@@ -52,7 +50,6 @@ except AttributeError:
 PYTHON_VERSION = platform.python_version()
 SENSEHAT_VERSION = pkg_resources.get_distribution("sense_hat").version
 FLASK_VERSION = pkg_resources.get_distribution('flask').version
->>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
 
 INFO_MESSAGE = '''
 <br><br>
@@ -80,7 +77,6 @@ except OSError as err_msg:
     print("ERROR - Problem accessing sense hat. Investigate ...")
     print("        %s" % err_msg)
     print("Exit %s ver %s" % (PROG_NAME, PROG_VER))
-<<<<<<< HEAD
     sense_on = False
 
 # Info for /about requests.
@@ -98,10 +94,8 @@ if sense_on:
     SENSEHAT_VERSION = pkg_resources.get_distribution("sense_hat").version
 else:
     SENSEHAT_VERSION = "SenseHat Hardware Not Found"
-=======
     sys.exit(1)
 sense.clear()
->>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
 
 app = Flask(__name__)
 # subprocess.check_output(['lsb_release', "-a"]).
@@ -365,9 +359,6 @@ def index():
 
 
 if __name__ == '__main__':
-<<<<<<< HEAD
-    app.run(debug=True, host="0.0.0.0", port=WEB_PORT_NUM)
-=======
     app.run(debug=False, host="0.0.0.0", port=WEB_PORT_NUM)
->>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
+
 
