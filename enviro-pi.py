@@ -5,8 +5,6 @@ print("Loading Wait ...")
 import os
 
 PROG_VER = "2.4"
-=======
-PROG_VER = "2.3"
 PROG_NAME = os.path.basename(__file__)
 HORIZ_LINE = "----------------------------------------------------------------------"
 
@@ -14,7 +12,6 @@ print(HORIZ_LINE)
 print("%s ver %s written by Pavol Odlevak and Claude Pageau" % (PROG_NAME, PROG_VER))
 print("Read/Save SenseHat Humidity, Temperature and Barometric Pressure data to a sqlite3 database.")
 print("Run webserver.py to View Data History graphs via Web Browser.")
-=======
 print("\nRead/Save SenseHat Humidity, Temperature and Barometric Pressure data to a sqlite3 database.")
 print("Run webserver.py to View Data History graphs via Web Browser.\n")
 print("Optional: Upload data to the Weather Underground Personal Weather Station (PWS)")
@@ -24,10 +21,8 @@ import time
 import datetime
 import sys
 import logging
-<<<<<<< HEAD
 import random
 import paho.mqtt.client as paho
-=======
 
 try:
     import requests
