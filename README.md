@@ -34,41 +34,49 @@ Note if sense hat display is enabled
 * pixel in top left indicates upload status. Green last upload successful. Red last upload failed.    
     
 ### Setup enviro-pi.py and enviro-web.py as background tasks 
+ 
+    ./enviro-py.sh help
+    ./enviro-py.sh install
+    ./enviro-pi.sh start
+    ./enviro-pi.sh status
+    ./enviro-pi.sh log
     
-    ./run.sh help
-    ./run.sh install
-    ./run.sh status
-    ./run.sh start
-    ./run.sh status
+    ./enviro-web.sh install
+    ./enviro-web.sh start
+    ./enviro-web.sh status
     
 Example of Help screen below For more information on supervisor [See Docs](https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-supervisor-on-ubuntu-and-debian-vps)
  
 ```
-./run.sh ver 2.0  written by Claude Pageau
-Control enviro-pi.py enviro-web.py
+pi@rpi-enviro:~/enviro-pi $ ./enviro-pi.sh help
+-----------------------------------------------
+./enviro-pi.sh supervisorctl help
 
-Usage: ./run.sh [Option]
+Usage: ./enviro-pi.sh [Option]
 
-Options:
+  Options:
   start        Start supervisor service
   stop         Stop supervisor service
+  restart      restart supervisor service
   status       Status of supervisor service
-  install      Install symbolic links for supervisor service
-  uninstall    Uninstall symbolic links for supervisor service
-  upgrade      Upgrade files from Github Repo
+  edit         nano edit /home/pi/enviro-pi/supervisor
+  log          tail -n 200 /var/log/enviro-pi.log
+  install      Install symbolic link for enviro-pi supervisor service
+  uninstall    Uninstall symbolic link for speed-cam supervisor service
+  upgrade      Upgrade speed-camera files from GitHub
   help         Display Usage message and Status
 
-Example:  ./run.sh status
+  Example:  ./enviro-pi.sh status
 
 ```
     
 #### Note   
-***./run.sh install*** command above will setup systemd supervisor symbolic links.   
+***./enviro-pi.sh install*** command above will setup systemd supervisor symbolic links.   
 This will auto start enviro-web.py and enviro-pi.py on boot.
-See run.sh help for other options. Eg start, stop, upgrade.  Reboot to test autostart.
+See enviro-pi.sh help for other options. Eg start, stop, upgrade.  Reboot to test autostart.
 
 ### Web Interface 
-To Access enviro-pi web interface See ***./run.sh*** help.      
+To Access enviro-pi web interface See ***./enviro-web.sh*** help.      
 
 From a computer on your local network, Type or copy/paste url link into web browser url box.     
 
@@ -98,13 +106,13 @@ To setup your Raspberry Pi and Sense Hat to upload data
 
 To test
 
-    ./run.sh stop
+    ./enviro-pi.sh stop
     ./enviro-pi.py
     
 Review logs to ensure uploads are successful.
 If OK restart enviro-pi.py and weather.py 
 
-    ./run.sh start
+    ./enviro-pi.sh start
     
 
 ### Hardware Requirements
