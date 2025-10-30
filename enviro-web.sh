@@ -1,5 +1,5 @@
 #!/bin/bash
-# This script will run the speed-cam.py as a background task
+# This script will run the enviro-web.py as a background task
 # You will then be able close the terminal session.
 # use the edit option and change autostart=true
 
@@ -98,8 +98,8 @@ Usage: ./$(basename "$0") [Option]
   edit         nano edit $conf_file_dir
   log          tail -n 200 /var/log/$service_name.log
   install      Install symbolic link for enviro-pi supervisor service
-  uninstall    Uninstall symbolic link for speed-cam supervisor service
-  upgrade      Upgrade speed-camera files from GitHub
+  uninstall    Uninstall symbolic link for enviro-web supervisor service
+  upgrade      Upgrade enviro-pi files from GitHub
   help         Display Usage message and Status
 
   Example:  ./$(basename "$0") status
