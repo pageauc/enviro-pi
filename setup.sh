@@ -1,7 +1,11 @@
 #!/bin/bash
 # speed-install.sh script written by Claude Pageau 1-Jul-2016
 
+<<<<<<< HEAD
+ver="1.4"
+=======
 ver="2.0"
+>>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
 INSTALL_DIR='enviro-pi'  # Default folder install location
 
 cd ~   # change to users home directory
@@ -48,11 +52,12 @@ fi
 echo "-----------------------------------------------"
 echo "Install Dependencies.  Wait ..."
 echo "-----------------------------------------------"
-sudo apt-get install -yq supervisor
-sudo apt-get install -yq python3-flask
-sudo apt-get install -yq sqlite3
-sudo apt-get install -yq sense-hat
-sudo apt-get install -yq dos2unix
+sudo apt install -yq supervisor
+sudo apt install -yq python3-flask
+sudo apt install -yq sqlite3
+sudo apt install -yq sense-hat
+sudo apt install -yq dos2unix
+sudo apt install -yq python3-paho-mqtt
 
 dos2unix *py
 dos2unix *sh
