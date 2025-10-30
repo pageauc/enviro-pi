@@ -1,11 +1,9 @@
 #!/bin/bash
 # speed-install.sh script written by Claude Pageau 1-Jul-2016
 
-<<<<<<< HEAD
 ver="1.4"
 =======
 ver="2.0"
->>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
 INSTALL_DIR='enviro-pi'  # Default folder install location
 
 cd ~   # change to users home directory
@@ -13,7 +11,7 @@ cd ~   # change to users home directory
 HOME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # List of files to copy to destination RPI using wget
-enviro_files=("README.md" "LICENSE" "enviro-web.py" "enviro-pi.py" "run.sh" \
+enviro_files=("README.md" "LICENSE" "enviro-web.py" "enviro-web.sh" "enviro-pi.py" "enviro-pi.sh" \
 "static/Chart.min.js" "static/favicon.ico" "static/menu.js" \
 "static/moment.min.js" "static/raspberry_pi_logo.png" "static/style.css" \
 "supervisor/enviro-web.conf" "supervisor/enviro-pi.conf" \
@@ -77,9 +75,15 @@ Install Complete
     cd ~/enviro-pi
     ./enviro-pi.py
 
-    ./run.sh install
-    ./run.sh start
-    ./run.sh status
+    ./enviro-py.sh install
+    ./enviro-pi.sh start
+    ./enviro-pi.sh status
+    ./enviro-pi.sh log
+    
+    ./enviro-web.sh install
+    ./enviro-web.sh start
+    ./enviro-web.sh status
+    
 
 Access enviro-pi web interface per instructions.
 Refresh Status page to display sensehat data and confirm system is working.
