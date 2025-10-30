@@ -4,14 +4,23 @@ from __future__ import print_function
 print("Loading Wait ...")
 import os
 
+<<<<<<< HEAD
+PROG_VER = "2.4"
+=======
 PROG_VER = "2.3"
+>>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
 PROG_NAME = os.path.basename(__file__)
 HORIZ_LINE = "----------------------------------------------------------------------"
 
 print(HORIZ_LINE)
 print("%s ver %s written by Pavol Odlevak and Claude Pageau" % (PROG_NAME, PROG_VER))
+<<<<<<< HEAD
+print("Read/Save SenseHat Humidity, Temperature and Barometric Pressure data to a sqlite3 database.")
+print("Run webserver.py to View Data History graphs via Web Browser.")
+=======
 print("\nRead/Save SenseHat Humidity, Temperature and Barometric Pressure data to a sqlite3 database.")
 print("Run webserver.py to View Data History graphs via Web Browser.\n")
+>>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
 print("Optional: Upload data to the Weather Underground Personal Weather Station (PWS)")
 print(HORIZ_LINE)
 
@@ -19,6 +28,11 @@ import time
 import datetime
 import sys
 import logging
+<<<<<<< HEAD
+import random
+import paho.mqtt.client as paho
+=======
+>>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
 
 try:
     import requests
@@ -72,6 +86,10 @@ except ImportError:
     print("Install Sense Hat Python library per below.  Then retry")
     print("sudo apt install sense-hat")
     sys.exit(1)
+<<<<<<< HEAD
+
+=======
+>>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
 try:
     sense = SenseHat()
 except OSError as err_msg:
@@ -80,6 +98,11 @@ except OSError as err_msg:
     print("Please investigate problem. Exiting %s ver %s" % (PROG_NAME, PROG_VER))
     sys.exit(1)
 
+<<<<<<< HEAD
+client_id = f'{SENSOR_ID}{random.randint(0, 1000)}'
+
+=======
+>>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
 # Create path to Sqlite3 Database File
 sqlite3_db_path = os.path.join(SQLITE3_DB_DIR, SQLITE3_DB_NAME)
 
@@ -137,6 +160,10 @@ hourglass = [
     b, b, b, b, b, b, b, b
 ]
 
+<<<<<<< HEAD
+unique_client_id = SENSOR_ID + "_" + str(random.randint(1, 1000))
+=======
+>>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
 
 def init_db():
     """Connects to the specific database."""
@@ -173,6 +200,40 @@ def get_temp():
 
     return temp_c - SENSEHAT_TEMP_OFFSET
 
+<<<<<<< HEAD
+def get_data():
+    temperature = round(sense.get_temperature(), 1)
+    humidity = round(sense.get_humidity(),0)
+    pressure = round(sense.get_pressure(),1)
+
+    mqtt_data = {
+                 "sensor_id" : SENSOR_ID,
+                 "sensor_location" : SENSOR_LOCATION,
+                 "temp" : temperature,
+                 "hum" : humidity,
+                 "pres" : pressure,
+                }
+    return mqtt_data
+
+
+def mqtt_send():
+    # Create a client instance
+    client = paho.Client(client_id=unique_client_id, protocol=paho.MQTTv311)
+    # Connect to the broker
+    client.connect(MQTT_BROKER, MQTT_PORT)
+
+    MQTT_TOPIC_MSG = str(get_data())
+    # The `publish()` method returns a tuple with the return code and message ID
+    result, mid = client.publish(MQTT_TOPIC, MQTT_TOPIC_MSG)
+    if result == paho.MQTT_ERR_SUCCESS:
+         logging.info(f"SUCCESS Topic: {MQTT_TOPIC} Broker: {MQTT_BROKER} Port: {MQTT_PORT}")
+         logging.info(f"{MQTT_TOPIC_MSG}")
+         time.sleep(2) # Short delay
+    else:
+         logging.error(f"FAIL: Publish error: {result}")
+    client.disconnect()
+=======
+>>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
 
 def main():
     if SENSEHAT_SCREEN_ON:
@@ -193,6 +254,10 @@ def main():
        mode = "Upload"
     else:
        mode = "Reading"
+<<<<<<< HEAD
+
+=======
+>>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
     logging.info("Next %s in %i minutes. Waiting ...", mode, STATION_UPLOAD_MINUTES)
     # infinite loop to continuously Read/Upload weather values
     while True:
@@ -221,6 +286,12 @@ def main():
                 # is minute zero, or divisible by 10?
                 # we're only going to take measurements every STATION_UPLOAD_MINUTES minutes
                 if (current_minute == 0) or ((current_minute % STATION_UPLOAD_MINUTES) == 0):
+<<<<<<< HEAD
+                    if MQTT_ON:
+                        mqtt_send()
+
+=======
+>>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
                     # Update sqlite3 database
                     logging.info("  READING: Temp: %sF (%sC), Press: %s hPa, Hum: %s%%",
                                  temp_f, temp_c, pressure, humidity)
@@ -312,4 +383,8 @@ if __name__ == "__main__":
         sense.clear()
         print("\nUser Exited with Ctrl-c")
         print("Bye ....")
+<<<<<<< HEAD
         sys.exit()
+=======
+        sys.exit()
+>>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
