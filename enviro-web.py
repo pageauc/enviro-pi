@@ -39,6 +39,8 @@ HORIZ_LINE = "------------------------------------------------------------------
 
 # Just a helper variable.
 SECONDS_IN_DAY = 86400
+<<<<<<< HEAD
+=======
 
 # Info for /about requests.
 try:
@@ -50,6 +52,7 @@ except AttributeError:
 PYTHON_VERSION = platform.python_version()
 SENSEHAT_VERSION = pkg_resources.get_distribution("sense_hat").version
 FLASK_VERSION = pkg_resources.get_distribution('flask').version
+>>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
 
 INFO_MESSAGE = '''
 <br><br>
@@ -72,12 +75,33 @@ except:
 
 try:
     sense = SenseHat()
+    sense_on = True
 except OSError as err_msg:
     print("ERROR - Problem accessing sense hat. Investigate ...")
     print("        %s" % err_msg)
     print("Exit %s ver %s" % (PROG_NAME, PROG_VER))
+<<<<<<< HEAD
+    sense_on = False
+
+# Info for /about requests.
+try:
+    OS_VERSION = ' '.join(platform.linux_distribution())
+except AttributeError:
+    import distro
+    OS_VERSION = distro.name(pretty=True)
+
+PYTHON_VERSION = platform.python_version()
+FLASK_VERSION = pkg_resources.get_distribution('flask').version
+
+if sense_on:
+    sense.clear()
+    SENSEHAT_VERSION = pkg_resources.get_distribution("sense_hat").version
+else:
+    SENSEHAT_VERSION = "SenseHat Hardware Not Found"
+=======
     sys.exit(1)
 sense.clear()
+>>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
 
 app = Flask(__name__)
 # subprocess.check_output(['lsb_release', "-a"]).
@@ -320,10 +344,20 @@ def about():
 @app.route('/status')
 @app.route('/')
 def index():
-    humidity = round(sense.humidity, 1)
-    pressure = round(sense.get_pressure(), 2)
-    temperature_from_humidity = round(sense.get_temperature(), 1)
-    temperature_from_pressure = round(sense.get_temperature_from_pressure(), 1)
+    if sense_on:
+        humidity = round(sense.humidity, 1)
+        pressure = round(sense.get_pressure(), 2)
+        temperature_from_humidity = round(sense.get_temperature(), 1)
+        temperature_from_pressure = round(sense.get_temperature_from_pressure(), 1)
+    else:
+        db = get_db()
+        cur = db.execute("select temp_hum, humidity from sensehat limit 1")
+        row = cur.fetchone()
+        temperature = str(row[0])
+        humidity = str(row[1])
+        pressure = 0
+        temperature_from_humidity = temperature
+        temperature_from_pressure = temperature
 
     return render_template('status.html', info=INFO_MESSAGE,
                             humidity=humidity, pressure=pressure,
@@ -331,5 +365,9 @@ def index():
 
 
 if __name__ == '__main__':
+<<<<<<< HEAD
+    app.run(debug=True, host="0.0.0.0", port=WEB_PORT_NUM)
+=======
     app.run(debug=False, host="0.0.0.0", port=WEB_PORT_NUM)
+>>>>>>> c8ca8f2600eef9bf349ffc5ec6dfcd71d4c04f1d
 
