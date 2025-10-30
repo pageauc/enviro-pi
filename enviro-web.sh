@@ -7,7 +7,7 @@
 login_id=$( whoami )
 speed_dir=$( pwd )
 service_name="enviro-web"
-conf_file_dir="/home/$login_id/enviro-web/supervisor"
+conf_file_dir="/home/$login_id/enviro-pi/supervisor"
 conf_file_name="enviro-web.conf"
 
 # change supervisor conf file for current logged in user
