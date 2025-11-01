@@ -1,4 +1,4 @@
-# configuration settings for enviro-pi.py and weather.py
+# configuration settings for enviro-pi.py 
 
 # Logging Settings
 # ----------------
@@ -7,15 +7,17 @@ LOGGING_ON = True    # True Enables Logging  False Disables logging
 # mqtt config settings
 # --------------------
 MQTT_ON = False
+MQTT_TOPIC = 'DHT/DHT_SENSEHAT'
 MQTT_BROKER = '192.168.1.100'
 MQTT_PORT = 1883
-MQTT_LOGIN = 'login'
-MQTT_PWD = "password"
-MQTT_TOPIC = 'DHT/DHT_SENSEHAT'
-MQTT_TOPIC_MSG = 'None'
 
-SENSOR_LOCATION = 'location of RPI with sensehat'
+# Optional MQTT Credentials
+MQTT_LOGIN_ON = False
+MQTT_LOGIN = "login"
+MQTT_PWD = "password"
+
 SENSOR_ID = 'DHT_SENSEHAT'
+SENSOR_LOCATION = 'location of RPI with sensehat'
 
 # Weather Underground Settings
 # ----------------------------
@@ -29,7 +31,7 @@ STATION_WU_URL = "http://weatherstation.wunderground.com/weatherstation/updatewe
 
 # SenseHat Settings
 # -----------------
-SENSEHAT_SCREEN_ON = False    # True = Display status on sense hat LED False = No Display
+SENSEHAT_SCREEN_ON = True     # True = Display status on sense hat LED False = No Display
 SENSEHAT_SCREEN_ROTATE = 90   # valid values are 0, 90, 180, 270
 SENSEHAT_INIT_MSG = "Enviro"  # Display sensehat LED startup message
 SENSEHAT_TEMP_OFFSET = 3.0    # Deg c to correct temperature due to rpi cpu heat

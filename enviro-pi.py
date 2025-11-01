@@ -4,17 +4,14 @@ from __future__ import print_function
 print("Loading Wait ...")
 import os
 
-PROG_VER = "2.4"
+PROG_VER = "2.5"
 PROG_NAME = os.path.basename(__file__)
 HORIZ_LINE = "----------------------------------------------------------------------"
 
 print(HORIZ_LINE)
 print("%s ver %s written by Pavol Odlevak and Claude Pageau" % (PROG_NAME, PROG_VER))
 print("Read/Save SenseHat Humidity, Temperature and Barometric Pressure data to a sqlite3 database.")
-print("Run webserver.py to View Data History graphs via Web Browser.")
-print("\nRead/Save SenseHat Humidity, Temperature and Barometric Pressure data to a sqlite3 database.")
-print("Run webserver.py to View Data History graphs via Web Browser.\n")
-print("Optional: Upload data to the Weather Underground Personal Weather Station (PWS)")
+print("Run enviro-web.py to View Data History graphs via Web Browser.")
 print(HORIZ_LINE)
 
 import time
@@ -22,7 +19,7 @@ import datetime
 import sys
 import logging
 import random
-import paho.mqtt.client as paho
+import paho.mqtt.publish as publish
 
 try:
     import requests
@@ -61,7 +58,7 @@ if LOGGING_ON:
                         datefmt="%Y-%m-%d %H:%M:%S",
                        )
 else:
-    print("WARNING: Logging Disabled per LOGGING_ON = %s" % LOGGING_ON)
+    print("WARNING: Logging Disabled per LOGGING_ON = {LOGGING_ON}")
 
 # Check that STATION_UPLOAD_MINUTES is not None and  less than 60
 if (STATION_UPLOAD_MINUTES is None) or (STATION_UPLOAD_MINUTES > 60):
@@ -86,6 +83,7 @@ except OSError as err_msg:
     sys.exit(1)
 
 client_id = f'{SENSOR_ID}{random.randint(0, 1000)}'
+mqtt_login = {"username" : MQTT_LOGIN, "password" : MQTT_PWD}
 
 # Create path to Sqlite3 Database File
 sqlite3_db_path = os.path.join(SQLITE3_DB_DIR, SQLITE3_DB_NAME)
@@ -196,22 +194,33 @@ def get_data():
     return mqtt_data
 
 
-def mqtt_send():
-    # Create a client instance
-    client = paho.Client(client_id=unique_client_id, protocol=paho.MQTTv311)
-    # Connect to the broker
-    client.connect(MQTT_BROKER, MQTT_PORT)
-
-    MQTT_TOPIC_MSG = str(get_data())
-    # The `publish()` method returns a tuple with the return code and message ID
-    result, mid = client.publish(MQTT_TOPIC, MQTT_TOPIC_MSG)
-    if result == paho.MQTT_ERR_SUCCESS:
-         logging.info(f"SUCCESS Topic: {MQTT_TOPIC} Broker: {MQTT_BROKER} Port: {MQTT_PORT}")
-         logging.info(f"{MQTT_TOPIC_MSG}")
-         time.sleep(2) # Short delay
-    else:
-         logging.error(f"FAIL: Publish error: {result}")
-    client.disconnect()
+def mqtt_pub():
+    mqtt_data = str(get_data())   # get data dict str
+    try:
+        if MQTT_LOGIN_ON:
+            publish.single(
+                MQTT_TOPIC,
+                payload = mqtt_data,
+                hostname = MQTT_BROKER,
+                port = MQTT_PORT,
+                qos = 1,
+                retain=False,
+                auth={"username" : MQTT_LOGIN, "password" : MQTT_PWD},
+            )
+        else:
+            publish.single(
+                MQTT_TOPIC,
+                payload = mqtt_data,
+                hostname = MQTT_BROKER,
+                port = MQTT_PORT,
+                qos = 1,
+                retain=False,
+            )            
+        logging.info(f"  SUCCESS Topic: {MQTT_TOPIC}, Broker: {MQTT_BROKER}, Port: {MQTT_PORT}")
+        logging.info(f"  msg: {mqtt_data}")
+    except Exception as e:
+        logging.warning(f"  Login Required per MQTT_LOGIN_ON = {MQTT_LOGIN_ON}")
+        logging.error(f"  FAILED: to Publish Message: {e}")
 
 def main():
     if SENSEHAT_SCREEN_ON:
@@ -261,13 +270,15 @@ def main():
                 # we're only going to take measurements every STATION_UPLOAD_MINUTES minutes
                 if (current_minute == 0) or ((current_minute % STATION_UPLOAD_MINUTES) == 0):
                     if MQTT_ON:
-                        mqtt_send()
+                        mqtt_pub()
+                    else:
+                        logging.warning(f"  MQTT_ON is Disabled per MQTT_ON={MQTT_ON}")
 
                     # Update sqlite3 database
-                    logging.info("  READING: Temp: %sF (%sC), Press: %s hPa, Hum: %s%%",
+                    logging.info("  SENSEHAT: Temp: %sF (%sC), Press: %s hPa, Hum: %s%%",
                                  temp_f, temp_c, pressure, humidity)
                     if SQLITE3_DB_ON:
-                        logging.info("  SQLITE3: INSERT Data INTO table sensehat at %s", sqlite3_db_path)
+                        logging.info(f"  SQLITE3: INSERT Data INTO table sensehat at %s", sqlite3_db_path)
                         with con:
                             cur = con.cursor()
                             command = "INSERT INTO sensehat VALUES(%i, %0.2f, %0.2f, %0.2f, %0.2f)" % (
@@ -277,7 +288,7 @@ def main():
                             except Exception as err:
                                 logging.error("DB Update Failed: %s\nError: %s", command, str(err))
                     else:
-                        logging.warning("  SQLITE3: DB DISABLED per SQLITE3_DB_ON = %s", SQLITE3_DB_ON)
+                        logging.warning(f"  SQLITE_DB_ON is DISABLED per SQLITE3_DB_ON={SQLITE3_DB_ON}")
                     now = datetime.datetime.now()
                     # did the temperature go up or down?
                     if SENSEHAT_SCREEN_ON:
@@ -322,8 +333,8 @@ def main():
                         except Exception as err:
                             logging.warning("  %s",err)
                     else:
-                        logging.warning("  UPLOAD: Disabled per STATION_UPLOAD_ON = %s",
-                                        STATION_UPLOAD_ON)
+                        logging.warning(f"  STATION_UPLOAD_ON is Disabled per STATION_UPLOAD_ON={STATION_UPLOAD_ON}")
+
                     logging.info("Next %s in %i minutes. Waiting ...",
                                   mode, STATION_UPLOAD_MINUTES)
 
@@ -344,8 +355,7 @@ if __name__ == "__main__":
     except Exception as err:
         logging.error("CONNECT: %s", err)
         sys.exit(1)
-
-    logging.info("READING: SUCCESS SenseHat OK. Temp is %dF (%dC)", last_temp, get_temp())
+    logging.info("SUCCESS: SenseHat OK. Temp is %dF (%dC)", last_temp, get_temp())
     try:
         main()
     except KeyboardInterrupt:
